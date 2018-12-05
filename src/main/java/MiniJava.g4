@@ -9,7 +9,7 @@ MainClass:'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String'
 ClassDeclaration:'class' Identifier ( 'extends' Identifier )? '{' (
                     VarDeclaration )* ( MethodDeclaration )* '}';
 
-VarDeclaration:Type Identifier;
+VarDeclaration:Type ';';
 
 MethodDeclaration:'public' Type Identifier '(' ( Type Identifier ( ','
                     Type Identifier )* )? ')' '{' ( VarDeclaration )* (
@@ -26,7 +26,7 @@ Statement:'{' ( Statement )* '}'
           |	'System.out.println' '(' Expression ')' ';'
           |	Identifier '=' Expression ';'
           |	Identifier '[' Expression ']' '=' Expression ';';
-
+/* Expression definition from BNF
 Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	Expression '[' Expression ']'
            |	Expression '.' 'length'
@@ -40,6 +40,25 @@ Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	'new' Identifier '(' ')'
            |	'!' Expression
            |	'(' Expression ')';
+*/
+// Try to solve left-reclusive problem.
+// Reference:http://www.cnblogs.com/quixotic/archive/2012/01/17/2324653.html
+Expression: Exp2(Exp1)*;
+
+Exp1:( '&&' | '<' | '+' | '-' | '*' ) Expression
+     |  '[' Expression ']'
+     |  '.' 'length'
+     |  '.' Identifier '(' ( Expression ( ',' Expression )* )? ')';
+
+Exp2:INTEGER_LITERAL
+    |   'true'
+    |   'false'
+    |   Identifier
+    |   'this'
+    |   'new' 'int' '[' Expression ']'
+    |   'new' Identifier '(' ')'
+    |   '!' Expression
+    |   '(' Expression ')';
 
 Identifier:Letter(Letter|Digit)*;
 
