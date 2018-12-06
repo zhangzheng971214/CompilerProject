@@ -12,11 +12,7 @@ import java.io.InputStream;
 
 public class Test {
     public static void main(String[] args) throws Exception{
-        String stat = "class test{\n" +
-                "    public static void main(String [] args){\n" +
-                "        a = 4+5;\n" +
-                "    }\n" +
-                "}";
+        String stat = "class test{ public static void main(String [] args){ a = 4+5; } }";
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 

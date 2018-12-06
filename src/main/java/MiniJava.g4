@@ -59,8 +59,7 @@ exp2:INTEGER_LITERAL
     |   '!' expression
     |   '(' expression ')';
 
-//Identifier:LETTER(LETTER|DIGIT)*;
-Identifier:[a-zA-Z]+;
+Identifier:LETTER(LETTER|DIGIT)*;
 
 WS:(' '|'\t'|'\n'|'\r')+{skip();};
 
