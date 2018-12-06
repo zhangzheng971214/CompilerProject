@@ -21,7 +21,7 @@ public class MiniJavaParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, Type=35, Identifier=36, INTEGER_LITERAL=37;
+		T__31=32, T__32=33, T__33=34, Type=35, Identifier=36, WS=37, INTEGER_LITERAL=38;
 	public static final int
 		RULE_goal = 0, RULE_mainClass = 1, RULE_classDeclaration = 2, RULE_varDeclaration = 3, 
 		RULE_methodDeclaration = 4, RULE_statement = 5, RULE_expression = 6, RULE_exp1 = 7, 
@@ -42,7 +42,7 @@ public class MiniJavaParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, "Type", 
-		"Identifier", "INTEGER_LITERAL"
+		"Identifier", "WS", "INTEGER_LITERAL"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1011,7 +1011,7 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\u00cd\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u00cd\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2"+
 		"\7\2\27\n\2\f\2\16\2\32\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\4\3\4\3\4\3\4\5\4\64\n\4\3\4"+
@@ -1064,7 +1064,7 @@ public class MiniJavaParser extends Parser {
 		"\2\2\u00af\u00ad\3\2\2\2\u00b0\u00a8\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1"+
 		"\u00b2\3\2\2\2\u00b2\u00b4\7\r\2\2\u00b3\u009d\3\2\2\2\u00b3\u009f\3\2"+
 		"\2\2\u00b3\u00a3\3\2\2\2\u00b3\u00a5\3\2\2\2\u00b4\21\3\2\2\2\u00b5\u00cb"+
-		"\7\'\2\2\u00b6\u00cb\7\37\2\2\u00b7\u00cb\7 \2\2\u00b8\u00cb\7&\2\2\u00b9"+
+		"\7(\2\2\u00b6\u00cb\7\37\2\2\u00b7\u00cb\7 \2\2\u00b8\u00cb\7&\2\2\u00b9"+
 		"\u00cb\7!\2\2\u00ba\u00bb\7\"\2\2\u00bb\u00bc\7#\2\2\u00bc\u00bd\7\13"+
 		"\2\2\u00bd\u00be\5\16\b\2\u00be\u00bf\7\f\2\2\u00bf\u00cb\3\2\2\2\u00c0"+
 		"\u00c1\7\"\2\2\u00c1\u00c2\7&\2\2\u00c2\u00c3\7\t\2\2\u00c3\u00cb\7\r"+

@@ -59,10 +59,13 @@ exp2:INTEGER_LITERAL
     |   '!' expression
     |   '(' expression ')';
 
-Identifier:LETTER(LETTER|DIGIT)*;
+//Identifier:LETTER(LETTER|DIGIT)*;
+Identifier:[a-zA-Z]+;
+
+WS:(' '|'\t'|'\n'|'\r')+{skip();};
 
 fragment
-LETTER:'a'..'z' | 'A'..'Z' | '_';
+LETTER:[a-zA-Z];
 
 INTEGER_LITERAL: DIGIT+; //定义为1个或多个整数组成
 
