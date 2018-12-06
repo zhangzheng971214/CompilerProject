@@ -44,13 +44,11 @@ Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
 // Try to solve left-reclusive problem.
 expression:exp2(exp1)*;
 
-fragment
 exp1:( '&&' | '<' | '+' | '-' | '*' ) expression
      |  '[' expression ']'
      |  '.' 'length'
      |  '.' Identifier '(' ( expression ( ',' expression )* )? ')';
 
-fragment
 exp2:INTEGER_LITERAL
     |   'true'
     |   'false'
