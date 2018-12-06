@@ -1,31 +1,31 @@
 // MiniJava complier implemented by Antlr
 grammar MiniJava;
 
-Goal:MainClass(ClassDeclaration)*EOF;
+goal:mainClass(classDeclaration)*EOF;
 
-MainClass:'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String'
-            '[' ']' Identifier ')' '{' Statement '}''}';
+mainClass:'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String'
+            '[' ']' Identifier ')' '{' statement '}''}';
 
-ClassDeclaration:'class' Identifier ( 'extends' Identifier )? '{' (
-                    VarDeclaration )* ( MethodDeclaration )* '}';
+classDeclaration:'class' Identifier ( 'extends' Identifier )? '{' (
+                    varDeclaration )* ( methodDeclaration )* '}';
 
-VarDeclaration:Type ';';
+varDeclaration:Type Identifier';';
 
-MethodDeclaration:'public' Type Identifier '(' ( Type Identifier ( ','
-                    Type Identifier )* )? ')' '{' ( VarDeclaration )* (
-                    Statement )* 'return' Expression ';' '}';
+methodDeclaration:'public' Type Identifier '(' ( Type Identifier ( ','
+                    Type Identifier )* )? ')' '{' ( varDeclaration )* (
+                    statement )* 'return' expression ';' '}';
 
 Type:'int' '[' ']'
       | 'boolean'
       | 'int'
       | Identifier;
 
-Statement:'{' ( Statement )* '}'
-          |	'if' '(' Expression ')' Statement 'else' Statement
-          |	'while' '(' Expression ')' Statement
-          |	'System.out.println' '(' Expression ')' ';'
-          |	Identifier '=' Expression ';'
-          |	Identifier '[' Expression ']' '=' Expression ';';
+statement:'{' ( statement )* '}'
+          |	'if' '(' expression ')' statement 'else' statement
+          |	'while' '(' expression ')' statement
+          |	'System.out.println' '(' expression ')' ';'
+          |	Identifier '=' expression ';'
+          |	Identifier '[' expression ']' '=' expression ';';
 /* Expression definition from BNF
 Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	Expression '[' Expression ']'
@@ -42,30 +42,31 @@ Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	'(' Expression ')';
 */
 // Try to solve left-reclusive problem.
-// Reference:http://www.cnblogs.com/quixotic/archive/2012/01/17/2324653.html
-Expression: Exp2(Exp1)*;
+expression:exp2(exp1)*;
 
-Exp1:( '&&' | '<' | '+' | '-' | '*' ) Expression
-     |  '[' Expression ']'
+fragment
+exp1:( '&&' | '<' | '+' | '-' | '*' ) expression
+     |  '[' expression ']'
      |  '.' 'length'
-     |  '.' Identifier '(' ( Expression ( ',' Expression )* )? ')';
+     |  '.' Identifier '(' ( expression ( ',' expression )* )? ')';
 
-Exp2:INTEGER_LITERAL
+fragment
+exp2:INTEGER_LITERAL
     |   'true'
     |   'false'
     |   Identifier
     |   'this'
-    |   'new' 'int' '[' Expression ']'
+    |   'new' 'int' '[' expression ']'
     |   'new' Identifier '(' ')'
-    |   '!' Expression
-    |   '(' Expression ')';
+    |   '!' expression
+    |   '(' expression ')';
 
-Identifier:Letter(Letter|Digit)*;
-
-fragment
-Letter:'a'..'z' | 'A'..'Z' | '_';
-
-INTEGER_LITERAL: Digit+; //定义为1个或多个整数组成
+Identifier:LETTER(LETTER|DIGIT)*;
 
 fragment
-Digit: '0'..'9';
+LETTER:'a'..'z' | 'A'..'Z' | '_';
+
+INTEGER_LITERAL: DIGIT+; //定义为1个或多个整数组成
+
+fragment
+DIGIT: '0'..'9';
