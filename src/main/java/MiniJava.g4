@@ -3,29 +3,29 @@ grammar MiniJava;
 
 goal:mainClass(classDeclaration)*EOF;
 
-mainClass:'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String'
-            '[' ']' Identifier ')' '{' statement '}''}';
+mainClass:'class' IDENTIFIER '{' KEYWORD KEYWORD KEYWORD KEYWORD '(' KEYWORD
+            '[' ']' IDENTIFIER ')' '{' statement '}''}';
 
-classDeclaration:'class' Identifier ( 'extends' Identifier )? '{' (
+classDeclaration:'class' IDENTIFIER ( 'extends' IDENTIFIER )? '{' (
                     varDeclaration )* ( methodDeclaration )* '}';
 
-varDeclaration:Type Identifier';';
+varDeclaration:Type IDENTIFIER';';
 
-methodDeclaration:'public' Type Identifier '(' ( Type Identifier ( ','
-                    Type Identifier )* )? ')' '{' ( varDeclaration )* (
+methodDeclaration:'public' Type IDENTIFIER '(' ( Type IDENTIFIER ( ','
+                    Type IDENTIFIER )* )? ')' '{' ( varDeclaration )* (
                     statement )* 'return' expression ';' '}';
 
 Type:'int' '[' ']'
       | 'boolean'
       | 'int'
-      | Identifier;
+      | IDENTIFIER;
 
 statement:'{' ( statement )* '}'
           |	'if' '(' expression ')' statement 'else' statement
           |	'while' '(' expression ')' statement
           |	'System.out.println' '(' expression ')' ';'
-          |	Identifier '=' expression ';'
-          |	Identifier '[' expression ']' '=' expression ';';
+          |	IDENTIFIER '=' expression ';'
+          |	IDENTIFIER '[' expression ']' '=' expression ';';
 /* Expression definition from BNF
 Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	Expression '[' Expression ']'
@@ -47,26 +47,46 @@ expression:exp2(exp1)*;
 exp1:( '&&' | '<' | '+' | '-' | '*' ) expression
      |  '[' expression ']'
      |  '.' 'length'
-     |  '.' Identifier '(' ( expression ( ',' expression )* )? ')';
+     |  '.' IDENTIFIER '(' ( expression ( ',' expression )* )? ')';
 
-exp2:INTEGER_LITERAL
+exp2:INT
     |   'true'
     |   'false'
-    |   Identifier
+    |   IDENTIFIER
     |   'this'
     |   'new' 'int' '[' expression ']'
-    |   'new' Identifier '(' ')'
+    |   'new' IDENTIFIER '(' ')'
     |   '!' expression
     |   '(' expression ')';
 
-Identifier:LETTER(LETTER|DIGIT)*;
+KEYWORD:'class'
+        |'public'
+        |'static'
+        |'void'
+        |'main'
+        |'String'
+        |'extends'
+        |'return'
+        |'int'
+        |'boolean'
+        |'if'
+        |'else'
+        |'while'
+        |'length'
+        |'true'
+        |'false'
+        |'this'
+        |'new';
 
+IDENTIFIER:('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+
+fragment
 WS:(' '|'\t'|'\n'|'\r')+{skip();};
 
 fragment
 LETTER:[a-zA-Z];
 
-INTEGER_LITERAL: DIGIT+; //定义为1个或多个整数组成
+INT: DIGIT+; //定义为1个或多个整数组成
 
 fragment
 DIGIT: '0'..'9';
