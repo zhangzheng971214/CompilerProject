@@ -3,7 +3,7 @@ grammar MiniJava;
 
 goal:mainClass(classDeclaration)*EOF;
 
-mainClass:'class' IDENTIFIER '{' KEYWORD KEYWORD KEYWORD KEYWORD '(' KEYWORD
+mainClass:'class' IDENTIFIER '{' 'public' 'static' 'void' 'main' '(' 'String'
             '[' ']' IDENTIFIER ')' '{' statement '}''}';
 
 classDeclaration:'class' IDENTIFIER ( 'extends' IDENTIFIER )? '{' (
@@ -15,10 +15,6 @@ methodDeclaration:'public' Type IDENTIFIER '(' ( Type IDENTIFIER ( ','
                     Type IDENTIFIER )* )? ')' '{' ( varDeclaration )* (
                     statement )* 'return' expression ';' '}';
 
-Type:'int' '[' ']'
-      | 'boolean'
-      | 'int'
-      | IDENTIFIER;
 
 statement:'{' ( statement )* '}'
           |	'if' '(' expression ')' statement 'else' statement
@@ -59,28 +55,13 @@ exp2:INT
     |   '!' expression
     |   '(' expression ')';
 
-KEYWORD:'class'
-        |'public'
-        |'static'
-        |'void'
-        |'main'
-        |'String'
-        |'extends'
-        |'return'
-        |'int'
-        |'boolean'
-        |'if'
-        |'else'
-        |'while'
-        |'length'
-        |'true'
-        |'false'
-        |'this'
-        |'new';
-
 IDENTIFIER:('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
-fragment
+Type:'int' '[' ']'
+      | 'boolean'
+      | 'int'
+      | IDENTIFIER;
+
 WS:(' '|'\t'|'\n'|'\r')+{skip();};
 
 fragment
