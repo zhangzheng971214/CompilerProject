@@ -21,7 +21,7 @@ public class MiniJavaParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
 		T__24=25, T__25=26, T__26=27, T__27=28, T__28=29, T__29=30, T__30=31, 
-		T__31=32, T__32=33, T__33=34, Type=35, Identifier=36, WS=37, INTEGER_LITERAL=38;
+		T__31=32, T__32=33, T__33=34, IDENTIFIER=35, Type=36, WS=37, INT=38;
 	public static final int
 		RULE_goal = 0, RULE_mainClass = 1, RULE_classDeclaration = 2, RULE_varDeclaration = 3, 
 		RULE_methodDeclaration = 4, RULE_statement = 5, RULE_expression = 6, RULE_exp1 = 7, 
@@ -41,8 +41,8 @@ public class MiniJavaParser extends Parser {
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, "Type", 
-		"Identifier", "WS", "INTEGER_LITERAL"
+		null, null, null, null, null, null, null, null, null, null, null, "IDENTIFIER", 
+		"Type", "WS", "INT"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -162,9 +162,9 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class MainClassContext extends ParserRuleContext {
-		public List<TerminalNode> Identifier() { return getTokens(MiniJavaParser.Identifier); }
-		public TerminalNode Identifier(int i) {
-			return getToken(MiniJavaParser.Identifier, i);
+		public List<TerminalNode> IDENTIFIER() { return getTokens(MiniJavaParser.IDENTIFIER); }
+		public TerminalNode IDENTIFIER(int i) {
+			return getToken(MiniJavaParser.IDENTIFIER, i);
 		}
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
@@ -197,7 +197,7 @@ public class MiniJavaParser extends Parser {
 			setState(27);
 			match(T__0);
 			setState(28);
-			match(Identifier);
+			match(IDENTIFIER);
 			setState(29);
 			match(T__1);
 			setState(30);
@@ -217,7 +217,7 @@ public class MiniJavaParser extends Parser {
 			setState(37);
 			match(T__9);
 			setState(38);
-			match(Identifier);
+			match(IDENTIFIER);
 			setState(39);
 			match(T__10);
 			setState(40);
@@ -242,9 +242,9 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class ClassDeclarationContext extends ParserRuleContext {
-		public List<TerminalNode> Identifier() { return getTokens(MiniJavaParser.Identifier); }
-		public TerminalNode Identifier(int i) {
-			return getToken(MiniJavaParser.Identifier, i);
+		public List<TerminalNode> IDENTIFIER() { return getTokens(MiniJavaParser.IDENTIFIER); }
+		public TerminalNode IDENTIFIER(int i) {
+			return getToken(MiniJavaParser.IDENTIFIER, i);
 		}
 		public List<VarDeclarationContext> varDeclaration() {
 			return getRuleContexts(VarDeclarationContext.class);
@@ -287,7 +287,7 @@ public class MiniJavaParser extends Parser {
 			setState(45);
 			match(T__0);
 			setState(46);
-			match(Identifier);
+			match(IDENTIFIER);
 			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -296,7 +296,7 @@ public class MiniJavaParser extends Parser {
 				setState(47);
 				match(T__12);
 				setState(48);
-				match(Identifier);
+				match(IDENTIFIER);
 				}
 			}
 
@@ -347,7 +347,7 @@ public class MiniJavaParser extends Parser {
 
 	public static class VarDeclarationContext extends ParserRuleContext {
 		public TerminalNode Type() { return getToken(MiniJavaParser.Type, 0); }
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MiniJavaParser.IDENTIFIER, 0); }
 		public VarDeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -376,7 +376,7 @@ public class MiniJavaParser extends Parser {
 			setState(66);
 			match(Type);
 			setState(67);
-			match(Identifier);
+			match(IDENTIFIER);
 			setState(68);
 			match(T__13);
 			}
@@ -397,9 +397,9 @@ public class MiniJavaParser extends Parser {
 		public TerminalNode Type(int i) {
 			return getToken(MiniJavaParser.Type, i);
 		}
-		public List<TerminalNode> Identifier() { return getTokens(MiniJavaParser.Identifier); }
-		public TerminalNode Identifier(int i) {
-			return getToken(MiniJavaParser.Identifier, i);
+		public List<TerminalNode> IDENTIFIER() { return getTokens(MiniJavaParser.IDENTIFIER); }
+		public TerminalNode IDENTIFIER(int i) {
+			return getToken(MiniJavaParser.IDENTIFIER, i);
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -447,7 +447,7 @@ public class MiniJavaParser extends Parser {
 			setState(71);
 			match(Type);
 			setState(72);
-			match(Identifier);
+			match(IDENTIFIER);
 			setState(73);
 			match(T__6);
 			setState(84);
@@ -458,7 +458,7 @@ public class MiniJavaParser extends Parser {
 				setState(74);
 				match(Type);
 				setState(75);
-				match(Identifier);
+				match(IDENTIFIER);
 				setState(81);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -470,7 +470,7 @@ public class MiniJavaParser extends Parser {
 					setState(77);
 					match(Type);
 					setState(78);
-					match(Identifier);
+					match(IDENTIFIER);
 					}
 					}
 					setState(83);
@@ -501,7 +501,7 @@ public class MiniJavaParser extends Parser {
 			setState(97);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__16) | (1L << T__18) | (1L << T__19) | (1L << Identifier))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__16) | (1L << T__18) | (1L << T__19) | (1L << IDENTIFIER))) != 0)) {
 				{
 				{
 				setState(94);
@@ -546,7 +546,7 @@ public class MiniJavaParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MiniJavaParser.IDENTIFIER, 0); }
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -582,7 +582,7 @@ public class MiniJavaParser extends Parser {
 				setState(109);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__16) | (1L << T__18) | (1L << T__19) | (1L << Identifier))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__16) | (1L << T__18) | (1L << T__19) | (1L << IDENTIFIER))) != 0)) {
 					{
 					{
 					setState(106);
@@ -650,7 +650,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(133);
-				match(Identifier);
+				match(IDENTIFIER);
 				setState(134);
 				match(T__20);
 				setState(135);
@@ -663,7 +663,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(138);
-				match(Identifier);
+				match(IDENTIFIER);
 				setState(139);
 				match(T__8);
 				setState(140);
@@ -765,7 +765,7 @@ public class MiniJavaParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MiniJavaParser.IDENTIFIER, 0); }
 		public Exp1Context(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -836,13 +836,13 @@ public class MiniJavaParser extends Parser {
 				setState(163);
 				match(T__26);
 				setState(164);
-				match(Identifier);
+				match(IDENTIFIER);
 				setState(165);
 				match(T__6);
 				setState(174);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__33) | (1L << Identifier) | (1L << INTEGER_LITERAL))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__33) | (1L << IDENTIFIER) | (1L << INT))) != 0)) {
 					{
 					setState(166);
 					expression();
@@ -883,8 +883,8 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class Exp2Context extends ParserRuleContext {
-		public TerminalNode INTEGER_LITERAL() { return getToken(MiniJavaParser.INTEGER_LITERAL, 0); }
-		public TerminalNode Identifier() { return getToken(MiniJavaParser.Identifier, 0); }
+		public TerminalNode INT() { return getToken(MiniJavaParser.INT, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(MiniJavaParser.IDENTIFIER, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -918,7 +918,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(179);
-				match(INTEGER_LITERAL);
+				match(INT);
 				}
 				break;
 			case 2:
@@ -939,7 +939,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(182);
-				match(Identifier);
+				match(IDENTIFIER);
 				}
 				break;
 			case 5:
@@ -970,7 +970,7 @@ public class MiniJavaParser extends Parser {
 				setState(190);
 				match(T__31);
 				setState(191);
-				match(Identifier);
+				match(IDENTIFIER);
 				setState(192);
 				match(T__6);
 				setState(193);
@@ -1029,15 +1029,15 @@ public class MiniJavaParser extends Parser {
 		"\2\bD\3\2\2\2\nH\3\2\2\2\f\u0094\3\2\2\2\16\u0096\3\2\2\2\20\u00b3\3\2"+
 		"\2\2\22\u00ca\3\2\2\2\24\30\5\4\3\2\25\27\5\6\4\2\26\25\3\2\2\2\27\32"+
 		"\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\33\3\2\2\2\32\30\3\2\2\2\33\34"+
-		"\7\2\2\3\34\3\3\2\2\2\35\36\7\3\2\2\36\37\7&\2\2\37 \7\4\2\2 !\7\5\2\2"+
+		"\7\2\2\3\34\3\3\2\2\2\35\36\7\3\2\2\36\37\7%\2\2\37 \7\4\2\2 !\7\5\2\2"+
 		"!\"\7\6\2\2\"#\7\7\2\2#$\7\b\2\2$%\7\t\2\2%&\7\n\2\2&\'\7\13\2\2\'(\7"+
-		"\f\2\2()\7&\2\2)*\7\r\2\2*+\7\4\2\2+,\5\f\7\2,-\7\16\2\2-.\7\16\2\2.\5"+
-		"\3\2\2\2/\60\7\3\2\2\60\63\7&\2\2\61\62\7\17\2\2\62\64\7&\2\2\63\61\3"+
+		"\f\2\2()\7%\2\2)*\7\r\2\2*+\7\4\2\2+,\5\f\7\2,-\7\16\2\2-.\7\16\2\2.\5"+
+		"\3\2\2\2/\60\7\3\2\2\60\63\7%\2\2\61\62\7\17\2\2\62\64\7%\2\2\63\61\3"+
 		"\2\2\2\63\64\3\2\2\2\64\65\3\2\2\2\659\7\4\2\2\668\5\b\5\2\67\66\3\2\2"+
 		"\28;\3\2\2\29\67\3\2\2\29:\3\2\2\2:?\3\2\2\2;9\3\2\2\2<>\5\n\6\2=<\3\2"+
 		"\2\2>A\3\2\2\2?=\3\2\2\2?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BC\7\16\2\2C\7\3"+
-		"\2\2\2DE\7%\2\2EF\7&\2\2FG\7\20\2\2G\t\3\2\2\2HI\7\5\2\2IJ\7%\2\2JK\7"+
-		"&\2\2KV\7\t\2\2LM\7%\2\2MS\7&\2\2NO\7\21\2\2OP\7%\2\2PR\7&\2\2QN\3\2\2"+
+		"\2\2\2DE\7&\2\2EF\7%\2\2FG\7\20\2\2G\t\3\2\2\2HI\7\5\2\2IJ\7&\2\2JK\7"+
+		"%\2\2KV\7\t\2\2LM\7&\2\2MS\7%\2\2NO\7\21\2\2OP\7&\2\2PR\7%\2\2QN\3\2\2"+
 		"\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2TW\3\2\2\2US\3\2\2\2VL\3\2\2\2VW\3\2\2"+
 		"\2WX\3\2\2\2XY\7\r\2\2Y]\7\4\2\2Z\\\5\b\5\2[Z\3\2\2\2\\_\3\2\2\2][\3\2"+
 		"\2\2]^\3\2\2\2^c\3\2\2\2_]\3\2\2\2`b\5\f\7\2a`\3\2\2\2be\3\2\2\2ca\3\2"+
@@ -1048,8 +1048,8 @@ public class MiniJavaParser extends Parser {
 		"\7\25\2\2|}\7\t\2\2}~\5\16\b\2~\177\7\r\2\2\177\u0080\5\f\7\2\u0080\u0095"+
 		"\3\2\2\2\u0081\u0082\7\26\2\2\u0082\u0083\7\t\2\2\u0083\u0084\5\16\b\2"+
 		"\u0084\u0085\7\r\2\2\u0085\u0086\7\20\2\2\u0086\u0095\3\2\2\2\u0087\u0088"+
-		"\7&\2\2\u0088\u0089\7\27\2\2\u0089\u008a\5\16\b\2\u008a\u008b\7\20\2\2"+
-		"\u008b\u0095\3\2\2\2\u008c\u008d\7&\2\2\u008d\u008e\7\13\2\2\u008e\u008f"+
+		"\7%\2\2\u0088\u0089\7\27\2\2\u0089\u008a\5\16\b\2\u008a\u008b\7\20\2\2"+
+		"\u008b\u0095\3\2\2\2\u008c\u008d\7%\2\2\u008d\u008e\7\13\2\2\u008e\u008f"+
 		"\5\16\b\2\u008f\u0090\7\f\2\2\u0090\u0091\7\27\2\2\u0091\u0092\5\16\b"+
 		"\2\u0092\u0093\7\20\2\2\u0093\u0095\3\2\2\2\u0094k\3\2\2\2\u0094s\3\2"+
 		"\2\2\u0094{\3\2\2\2\u0094\u0081\3\2\2\2\u0094\u0087\3\2\2\2\u0094\u008c"+
@@ -1058,16 +1058,16 @@ public class MiniJavaParser extends Parser {
 		"\2\2\u009b\17\3\2\2\2\u009c\u009a\3\2\2\2\u009d\u009e\t\2\2\2\u009e\u00b4"+
 		"\5\16\b\2\u009f\u00a0\7\13\2\2\u00a0\u00a1\5\16\b\2\u00a1\u00a2\7\f\2"+
 		"\2\u00a2\u00b4\3\2\2\2\u00a3\u00a4\7\35\2\2\u00a4\u00b4\7\36\2\2\u00a5"+
-		"\u00a6\7\35\2\2\u00a6\u00a7\7&\2\2\u00a7\u00b0\7\t\2\2\u00a8\u00ad\5\16"+
+		"\u00a6\7\35\2\2\u00a6\u00a7\7%\2\2\u00a7\u00b0\7\t\2\2\u00a8\u00ad\5\16"+
 		"\b\2\u00a9\u00aa\7\21\2\2\u00aa\u00ac\5\16\b\2\u00ab\u00a9\3\2\2\2\u00ac"+
 		"\u00af\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b1\3\2"+
 		"\2\2\u00af\u00ad\3\2\2\2\u00b0\u00a8\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1"+
 		"\u00b2\3\2\2\2\u00b2\u00b4\7\r\2\2\u00b3\u009d\3\2\2\2\u00b3\u009f\3\2"+
 		"\2\2\u00b3\u00a3\3\2\2\2\u00b3\u00a5\3\2\2\2\u00b4\21\3\2\2\2\u00b5\u00cb"+
-		"\7(\2\2\u00b6\u00cb\7\37\2\2\u00b7\u00cb\7 \2\2\u00b8\u00cb\7&\2\2\u00b9"+
+		"\7(\2\2\u00b6\u00cb\7\37\2\2\u00b7\u00cb\7 \2\2\u00b8\u00cb\7%\2\2\u00b9"+
 		"\u00cb\7!\2\2\u00ba\u00bb\7\"\2\2\u00bb\u00bc\7#\2\2\u00bc\u00bd\7\13"+
 		"\2\2\u00bd\u00be\5\16\b\2\u00be\u00bf\7\f\2\2\u00bf\u00cb\3\2\2\2\u00c0"+
-		"\u00c1\7\"\2\2\u00c1\u00c2\7&\2\2\u00c2\u00c3\7\t\2\2\u00c3\u00cb\7\r"+
+		"\u00c1\7\"\2\2\u00c1\u00c2\7%\2\2\u00c2\u00c3\7\t\2\2\u00c3\u00cb\7\r"+
 		"\2\2\u00c4\u00c5\7$\2\2\u00c5\u00cb\5\16\b\2\u00c6\u00c7\7\t\2\2\u00c7"+
 		"\u00c8\5\16\b\2\u00c8\u00c9\7\r\2\2\u00c9\u00cb\3\2\2\2\u00ca\u00b5\3"+
 		"\2\2\2\u00ca\u00b6\3\2\2\2\u00ca\u00b7\3\2\2\2\u00ca\u00b8\3\2\2\2\u00ca"+
