@@ -27,3 +27,12 @@ public class Test {
         System.out.println(tree.toStringTree(parser));
     }
 }
+
+/*
+public class Test {
+    public static void main(String[] args) {
+        int a = 3-4*5;
+    }
+}
+
+ */

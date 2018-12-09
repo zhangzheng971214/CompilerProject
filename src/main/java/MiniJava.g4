@@ -2,29 +2,42 @@
 grammar MiniJava;
 
 goal
-    : mainClass(classDeclaration)*EOF;
+    :   mainClass classDeclaration* EOF;
 
 mainClass
-    : 'class' IDENTIFIER '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')' '{' statement '}''}';
+    :   'class' IDENTIFIER
+        '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')'
+            '{' statement '}'
+        '}';
 
 classDeclaration
-    : 'class' IDENTIFIER ( 'extends' IDENTIFIER )? '{' (varDeclaration)* (methodDeclaration)* '}';
+    :   'class' IDENTIFIER ('extends' IDENTIFIER)?
+        '{' (varDeclaration)* (methodDeclaration)* '}';
 
 varDeclaration
-    : Type IDENTIFIER';';
+    :   type IDENTIFIER';';
 
 methodDeclaration
-    : 'public' Type IDENTIFIER '(' (Type IDENTIFIER (','Type IDENTIFIER )* )? ')' '{' ( varDeclaration )* (
-                    statement )* 'return' expression ';' '}';
+    :   'public' type IDENTIFIER formalParameters
+        '{'
+            (varDeclaration)*
+            (statement)*
+            'return' expression';'
+        '}';
 
+formalParameters
+    :   '(' (type IDENTIFIER (',' type IDENTIFIER)*)? ')';
 
 statement
-    : '{' ( statement )* '}'
-    | 'if' '(' expression ')' statement 'else' statement
-    | 'while' '(' expression ')' statement
-    | 'System.out.println' '(' expression ')' ';'
-    | IDENTIFIER '=' expression ';'
-    | IDENTIFIER '[' expression ']' '=' expression ';';
+    :   '{' statement* '}'                                  # nestedStatement
+    |   'if' '(' expression ')' statement
+        'else' statement                                    # ifStatement
+    |   'while' '(' expression ')' statement                # whileStatement
+    |   'System.out.println' '(' expression ')' ';'         # printStatement
+    |   IDENTIFIER '=' expression ';'                       # assignStatement
+    |   IDENTIFIER '[' expression ']' '=' expression ';'    # arrayAssignStatement
+    ;
+
 /* Expression definition from BNF
 Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
            |	Expression '[' Expression ']'
@@ -42,43 +55,39 @@ Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
 */
 // Try to solve left-reclusive problem.
 expression
-    : exp2(exp1)*;
+    :   exp2(exp1)*;
 
 exp1
-    : ( '&&' | '<' | '+' | '-' | '*' ) expression
-    | '[' expression ']'
-    | '.' 'length'
-    | '.' IDENTIFIER '(' ( expression ( ',' expression )* )? ')';
+    :   ( '&&' | '<' | '+' | '-' | '*' ) expression
+    |    '[' expression ']'
+    |    '.' 'length'
+    |    '.' IDENTIFIER '(' ( expression ( ',' expression )* )? ')';
 
 exp2
-    : INT
-    | 'true'
-    | 'false'
-    | IDENTIFIER
-    | 'this'
-    | 'new' 'int' '[' expression ']'
-    | 'new' IDENTIFIER '(' ')'
-    | '!' expression
-    | '(' expression ')';
+    :   INT
+    |    'true'
+    |    'false'
+    |    IDENTIFIER
+    |    'this'
+    |    'new' 'int' '[' expression ']'
+    |    'new' IDENTIFIER '(' ')'
+    |    '!' expression
+    |    '(' expression ')';
 
-IDENTIFIER:('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+type
+    :    'int' '[' ']'
+    |    'boolean'
+    |    'int'
+    |    IDENTIFIER;
 
-Type
-    : 'int' '[' ']'
-    | 'boolean'
-    | 'int'
-    | IDENTIFIER;
+IDENTIFIER
+    :   [a-zA-Z_][0-9a-zA-Z_]*;
+
+INT
+    :   [0-9]+; //允许0开头
 
 WS
     :   [ \r\t\n]+ -> skip;
 
-fragment
-LETTER
-    : [a-zA-Z];
-
-INT
-    : DIGIT+; //定义为1个或多个整数组成
-
-fragment
-DIGIT
-    : '0'..'9';
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip;
