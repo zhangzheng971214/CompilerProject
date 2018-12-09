@@ -6,7 +6,8 @@ goal
 
 mainClass
     :   'class' IDENTIFIER
-        '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')'
+        '{'
+            'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')'
             '{' statement '}'
         '}';
 
@@ -20,59 +21,42 @@ varDeclaration
 methodDeclaration
     :   'public' type IDENTIFIER formalParameters
         '{'
-            (varDeclaration)*
-            (statement)*
-            'return' expression';'
+            varDeclaration*
+            statement*
+            'return' expression ';'
         '}';
 
 formalParameters
     :   '(' (type IDENTIFIER (',' type IDENTIFIER)*)? ')';
 
 statement
-    :   '{' statement* '}'                                  # nestedStatement
+    :   '{' statement* '}'                                  # nestedStmt
     |   'if' '(' expression ')' statement
-        'else' statement                                    # ifStatement
-    |   'while' '(' expression ')' statement                # whileStatement
-    |   'System.out.println' '(' expression ')' ';'         # printStatement
-    |   IDENTIFIER '=' expression ';'                       # assignStatement
-    |   IDENTIFIER '[' expression ']' '=' expression ';'    # arrayAssignStatement
+        'else' statement                                    # ifStmt
+    |   'while' '(' expression ')' statement                # whileStmt
+    |   'System.out.println' '(' expression ')' ';'         # printStmt
+    |   IDENTIFIER '=' expression ';'                       # assignStmt
+    |   IDENTIFIER '[' expression ']' '=' expression ';'    # arrayAssignStmt
     ;
 
-/* Expression definition from BNF
-Expression:Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
-           |	Expression '[' Expression ']'
-           |	Expression '.' 'length'
-           |	Expression '.' Identifier '(' ( Expression ( ',' Expression )* )? ')'
-           |	INTEGER_LITERAL
-           |	'true'
-           |	'false'
-           |	Identifier
-           |	'this'
-           |	'new' 'int' '[' Expression ']'
-           |	'new' Identifier '(' ')'
-           |	'!' Expression
-           |	'(' Expression ')';
-*/
-// Try to solve left-reclusive problem.
 expression
-    :   exp2(exp1)*;
-
-exp1
-    :   ( '&&' | '<' | '+' | '-' | '*' ) expression
-    |    '[' expression ']'
-    |    '.' 'length'
-    |    '.' IDENTIFIER '(' ( expression ( ',' expression )* )? ')';
-
-exp2
-    :   INT
-    |    'true'
-    |    'false'
-    |    IDENTIFIER
-    |    'this'
-    |    'new' 'int' '[' expression ']'
-    |    'new' IDENTIFIER '(' ')'
-    |    '!' expression
-    |    '(' expression ')';
+    :   expression '[' expression ']'   # arrayExpr
+    |   expression '.' 'length'         # lenExpr
+    |   expression '.' IDENTIFIER '(' (expression (',' expression)*)? ')'   # callExpr
+    |   expression '*'  expression      # mulExpr
+    |   expression '+'  expression      # addExpr
+    |   expression '-'  expression      # subExpr
+    |   expression '<'  expression      # compareExpr
+    |   expression '&&' expression      # andExpr
+    |   INT                             # intExpr
+    |   ('true' | 'false')              # boolExpr         //负号运算怎么办？
+    |   IDENTIFIER                      # idExpr
+    |	'this'                          # thisExpr
+    |	'new' 'int' '[' expression ']'  # newArrayExpr
+    |	'new' IDENTIFIER '(' ')'        # newIdExpr
+    |	'!' expression                  # notExpr
+    |	'(' expression ')'              # nestedExpr
+    ;
 
 type
     :    'int' '[' ']'
