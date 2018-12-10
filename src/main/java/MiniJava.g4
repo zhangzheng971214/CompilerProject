@@ -31,8 +31,7 @@ formalParameters
 
 statement
     :   '{' statement* '}'                                  # nestedStmt
-    |   'if' '(' expression ')' statement
-        'else' statement                                    # ifStmt
+    |   'if' '(' expression ')' statement 'else' statement                                    # ifStmt
     |   'while' '(' expression ')' statement                # whileStmt
     |   'System.out.println' '(' expression ')' ';'         # printStmt
     |   IDENTIFIER '=' expression ';'                       # assignStmt
