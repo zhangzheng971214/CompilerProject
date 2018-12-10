@@ -5,21 +5,25 @@ goal
     :   mainClass classDeclaration* EOF;
 
 mainClass
-    :   'class' IDENTIFIER
+    :   'class' ID
         '{'
-            'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')'
+            'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')'
             '{' statement '}'
-        '}';
+        '}'
+        {System.out.println("class "+$ID.text);}
+    ;
 
 classDeclaration
-    :   'class' IDENTIFIER ('extends' IDENTIFIER)?
-        '{' (varDeclaration)* (methodDeclaration)* '}';
+    :   'class' ID ('extends' ID)?
+        '{' varDeclaration* methodDeclaration* '}'
+        {System.out.println("class "+$ID.text);}
+    ;
 
 varDeclaration
-    :   type IDENTIFIER';';
+    :   type ID';';
 
 methodDeclaration
-    :   'public' type IDENTIFIER formalParameters
+    :   'public' type ID formalParameters
         '{'
             varDeclaration*
             statement*
@@ -27,21 +31,21 @@ methodDeclaration
         '}';
 
 formalParameters
-    :   '(' (type IDENTIFIER (',' type IDENTIFIER)*)? ')';
+    :   '(' (type ID (',' type ID)*)? ')';
 
 statement
     :   '{' statement* '}'                                  # nestedStmt
-    |   'if' '(' expression ')' statement 'else' statement                                    # ifStmt
+    |   'if' '(' expression ')' statement 'else' statement  # ifStmt
     |   'while' '(' expression ')' statement                # whileStmt
     |   'System.out.println' '(' expression ')' ';'         # printStmt
-    |   IDENTIFIER '=' expression ';'                       # assignStmt
-    |   IDENTIFIER '[' expression ']' '=' expression ';'    # arrayAssignStmt
+    |   ID '=' expression ';'                       # assignStmt
+    |   ID '[' expression ']' '=' expression ';'    # arrayAssignStmt
     ;
 
 expression
     :   expression '[' expression ']'   # arrayExpr
-    |   expression '.' 'length'         # lenExpr
-    |   expression '.' IDENTIFIER '(' (expression (',' expression)*)? ')'   # callExpr
+    |   expression '.' 'length'         # lengthExpr
+    |   expression '.' ID '(' (expression (',' expression)*)? ')'   # callExpr
     |   expression '*'  expression      # mulExpr
     |   expression '+'  expression      # addExpr
     |   expression '-'  expression      # subExpr
@@ -49,10 +53,10 @@ expression
     |   expression '&&' expression      # andExpr
     |   INT                             # intExpr
     |   ('true' | 'false')              # boolExpr         //负号运算怎么办？
-    |   IDENTIFIER                      # idExpr
+    |   ID                      # idExpr
     |	'this'                          # thisExpr
     |	'new' 'int' '[' expression ']'  # newArrayExpr
-    |	'new' IDENTIFIER '(' ')'        # newIdExpr
+    |	'new' ID '(' ')'        # newIdExpr
     |	'!' expression                  # notExpr
     |	'(' expression ')'              # nestedExpr
     ;
@@ -61,9 +65,9 @@ type
     :    'int' '[' ']'
     |    'boolean'
     |    'int'
-    |    IDENTIFIER;
+    |    ID;
 
-IDENTIFIER
+ID
     :   [a-zA-Z_][0-9a-zA-Z_]*;
 
 INT
