@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Test {
     public static void main(String[] args) throws Exception {
-        String stat = "class T T{ public static void main(String [] args){ int a; } }";
+        String stat = "class T{ public static void main(String [] args){  a=1; } }";
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -44,11 +44,3 @@ public class Test {
 
 }
 
-/*
-public class Test {
-    public static void main(String[] args) {
-        int a = 3-4*5;
-    }
-}
-
- */

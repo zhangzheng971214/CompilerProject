@@ -2,7 +2,8 @@
 grammar MiniJava;
 
 goal
-    :   mainClass classDeclaration* EOF;
+    :   mainClass classDeclaration* EOF
+    ;
 
 mainClass
     :   'class' ID
@@ -20,7 +21,8 @@ classDeclaration
     ;
 
 varDeclaration
-    :   type ID';';
+    :   type ID';'
+    ;
 
 methodDeclaration
     :   'public' type ID formalParameters
@@ -28,53 +30,60 @@ methodDeclaration
             varDeclaration*
             statement*
             'return' expression ';'
-        '}';
+        '}'
+    ;
 
 formalParameters
-    :   '(' (type ID (',' type ID)*)? ')';
+    :   '(' (type ID (',' type ID)*)? ')'
+    ;
 
 statement
     :   '{' statement* '}'                                  # nestedStmt
     |   'if' '(' expression ')' statement 'else' statement  # ifStmt
     |   'while' '(' expression ')' statement                # whileStmt
     |   'System.out.println' '(' expression ')' ';'         # printStmt
-    |   ID '=' expression ';'                       # assignStmt
-    |   ID '[' expression ']' '=' expression ';'    # arrayAssignStmt
+    |   ID '=' expression ';'                               # assignStmt
+    |   ID '[' expression ']' '=' expression ';'            # arrayAssignStmt
     ;
 
 expression
-    :   expression '[' expression ']'   # arrayExpr
-    |   expression '.' 'length'         # lengthExpr
+    :   expression '[' expression ']'                               # arrayExpr
+    |   expression '.' 'length'                                     # lengthExpr
     |   expression '.' ID '(' (expression (',' expression)*)? ')'   # callExpr
-    |   expression '*'  expression      # mulExpr
-    |   expression '+'  expression      # addExpr
-    |   expression '-'  expression      # subExpr
-    |   expression '<'  expression      # compareExpr
-    |   expression '&&' expression      # andExpr
-    |   INT                             # intExpr
-    |   ('true' | 'false')              # boolExpr         //负号运算怎么办？
-    |   ID                      # idExpr
-    |	'this'                          # thisExpr
-    |	'new' 'int' '[' expression ']'  # newArrayExpr
-    |	'new' ID '(' ')'        # newIdExpr
-    |	'!' expression                  # notExpr
-    |	'(' expression ')'              # nestedExpr
+    |   expression '*'  expression                                  # mulExpr
+    |   expression '+'  expression                                  # addExpr
+    |   expression '-'  expression                                  # subExpr
+    |   expression '<'  expression                                  # compareExpr
+    |   expression '&&' expression                                  # andExpr
+    |   INT                                                         # intExpr
+    |   ('true' | 'false')                                          # boolExpr
+    |   ID                                                          # idExpr
+    |	'this'                                                      # thisExpr
+    |	'new' 'int' '[' expression ']'                              # newArrayExpr
+    |	'new' ID '(' ')'                                            # newIdExpr
+    |	'!' expression                                              # notExpr
+    |	'(' expression ')'                                          # nestedExpr
     ;
 
 type
     :    'int' '[' ']'
     |    'boolean'
     |    'int'
-    |    ID;
+    |    ID
+    ;
 
 ID
-    :   [a-zA-Z_][0-9a-zA-Z_]*;
+    :   [a-zA-Z_][0-9a-zA-Z_]*
+    ;
 
 INT
-    :   [0-9]+; //允许0开头
+    :   [0-9]+      //允许0开头,负数怎么办？
+    ;
 
 WS
-    :   [ \r\t\n]+ -> skip;
+    :   [ \r\t\n]+ -> skip
+    ;
 
 LINE_COMMENT
-    :   '//' ~[\r\n]* -> skip;
+    :   '//' ~[\r\n]* -> skip
+    ;
