@@ -10,8 +10,8 @@ mainClass
             'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')'
             '{' statement '}'
         '}'
-        {System.out.println("class "+$ID.text);}
-    ;
+        //{System.out.println("class "+$ID.text);}
+    ;finally{System.out.println("class ERROR!");}
 
 classDeclaration
     :   'class' ID ('extends' ID)?

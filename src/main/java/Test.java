@@ -22,8 +22,8 @@ public class Test {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         MiniJavaParser parser = new MiniJavaParser(tokens);
-        parser.removeErrorListeners(); // remove ConsoleErrorListener
-        parser.addErrorListener(new VerboseListener()); // add ours
+        //parser.removeErrorListeners(); // remove ConsoleErrorListener
+        //parser.addErrorListener(new VerboseListener()); // add ours
         ParseTree tree = parser.goal();
 
         System.out.println(tree.toStringTree(parser));
