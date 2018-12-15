@@ -5,9 +5,9 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.tree.*;
 
-public class Test {
+public class Main {
     public static void main(String[] args) throws Exception {
-        String stat = "class T { public static void main(String [] args){ System.main.println(1); } }";
+        String stat = "class T T{ public static void main(String [] args){ System.out.println(1); } }";
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -27,7 +27,7 @@ public class Test {
     }
 }
 /*
-public class Test {
+public class Main {
     public static void main(String[] args) {
         int a = 3-4*5;
     }

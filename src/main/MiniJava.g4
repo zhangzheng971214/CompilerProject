@@ -17,7 +17,7 @@ mainClass
 classDeclaration
     :   'class' ID ('extends' ID)?
         '{' varDeclaration* methodDeclaration* '}'
-        {System.main.println("class "+$ID.text);}
+        //{System.out.println("class "+$ID.text);}
     ;
 
 varDeclaration
