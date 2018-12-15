@@ -34,7 +34,7 @@ public class MiniJavaParser extends Parser {
 	private static final String[] _LITERAL_NAMES = {
 		null, "'class'", "'{'", "'public'", "'static'", "'void'", "'main'", "'('", 
 		"'String'", "'['", "']'", "')'", "'}'", "'extends'", "';'", "'return'", 
-		"','", "'if'", "'else'", "'while'", "'System.main.println'", "'='", "'.'", 
+		"','", "'if'", "'else'", "'while'", "'System.out.println'", "'='", "'.'", 
 		"'length'", "'*'", "'+'", "'-'", "'<'", "'&&'", "'true'", "'false'", "'this'", 
 		"'new'", "'int'", "'!'", "'boolean'"
 	};
