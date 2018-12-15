@@ -11,8 +11,8 @@ mainClass
             'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')'
             '{' statement '}'
         '}'
-        //{System.main.println("class "+$ID.text);}
-    ;   //finally{System.main.println("class ERROR!");}
+        //{System.out.println("class "+$ID.text);}
+    ;   //finally{System.out.println("class ERROR!");}
 
 classDeclaration
     :   'class' ID ('extends' ID)?
@@ -41,7 +41,7 @@ statement
     :   '{' statement* '}'                                  # nestedStmt
     |   'if' '(' expression ')' statement 'else' statement  # ifStmt
     |   'while' '(' expression ')' statement                # whileStmt
-    |   'System.main.println' '(' expression ')' ';'         # printStmt
+    |   'System.out.println' '(' expression ')' ';'         # printStmt
     |   ID '=' expression ';'                               # assignStmt
     |   ID '[' expression ']' '=' expression ';'            # arrayAssignStmt
     ;

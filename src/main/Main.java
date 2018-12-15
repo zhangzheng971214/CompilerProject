@@ -19,7 +19,7 @@ public class Main {
 
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new TestErrorListener()); // add ours
-        parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
+        //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
 
         ParseTree tree = parser.goal();
 
