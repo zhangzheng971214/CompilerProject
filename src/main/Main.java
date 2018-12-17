@@ -27,11 +27,11 @@ public class Main {
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
         //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
 
-        // begin parsing
+        // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
         exceptionHandler.checkException();
 
-
+        // show AST in both console and GUI
         showAST(parser, tree);
     }
 

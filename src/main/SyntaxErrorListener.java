@@ -5,9 +5,9 @@ import org.antlr.v4.runtime.*;
 public class SyntaxErrorListener extends BaseErrorListener {
     private ExceptionHandler _exceptionHandler;
 
-    SyntaxErrorListener(ExceptionHandler exceptionHandler){
+    SyntaxErrorListener(ExceptionHandler exceptionHandler) {
         super();
-        _exceptionHandler=exceptionHandler;
+        _exceptionHandler = exceptionHandler;
     }
 
     @Override

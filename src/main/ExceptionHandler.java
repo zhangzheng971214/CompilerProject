@@ -25,7 +25,7 @@ public class ExceptionHandler {
         if(exceptionNum!=0){
             System.err.println(exceptionNum + " exceptions found!");
             System.err.println("Program will exit!");
-            System.exit(exceptionNum);
+            System.exit(-1);
         }
     }
 }
