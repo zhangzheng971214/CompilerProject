@@ -24,7 +24,8 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
     public void enterMainClass(MiniJavaParser.MainClassContext ctx){
         //将此结点添加至classNodes中,并加入符号表
         String nodeName = ctx.name.getText();
-        classNode mainClass = new classNode(nodeName, "<No Parent>", current); //建立Node类，goal是没有parent的
+        classNode mainClass = new classNode(nodeName, "<No Parent>", current); //建立Node类，mianClass是没有parent
+                                                                                            //但是有upperScope
         classNodes.put(nodeName, mainClass); //结点加入到Nodes
 
         current.addSymbol(mainClass); //此结点作为符号加入到current符号表中
@@ -39,14 +40,14 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         //将此结点添加至classNodes中
         //TODO:考察parent结点是否是current结点
         String nodeName = ctx.name.getText();
-        boolean valid = current.isValid();
-        String parentName = ctx.parent!=null ? ctx.parent.getText() : "<No Parent>"; //获得parent的名
+        boolean valid = true; //TODO:current.isValid();
+        classNode parent = ctx.parent!=null ? classNodes.get(ctx.parent.getText()) : null; //获得parent的名
         //类声明的过程中需要考察类是否重复定义
         if(classNodes.containsKey(nodeName)) {
             System.out.println("类名重复定义");//TODO:错误输出
             valid = false;
         }
-        classNode classDeclaration = new classNode(nodeName, classNodes.get(parentName), valid); //upperScope默认为parent
+        classNode classDeclaration = new classNode(nodeName, parent, current, valid); //upperScope默认为parent
         if(valid) { //TODO:需不需要考察valid？
             current.addSymbol(classDeclaration);
             classNodes.put(nodeName, classDeclaration); //添加到全局的classNodes中
