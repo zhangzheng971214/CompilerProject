@@ -6,11 +6,11 @@ public class Symbol {
     private String name;
     private String type;
     //构造函数
-    public void Symbol(String name){
+    public Symbol(String name){
         this.name = name;
     }
 
-    public void Symbol(String name, String type){
+    public Symbol(String name, String type){
         this.name = name;
         this.type = type;
     }
@@ -22,5 +22,5 @@ public class Symbol {
     public String getType() {
         return type;
     }
-    
+
 }
