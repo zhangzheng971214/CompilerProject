@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
-        File file = new File("E:\\IDEA projects\\CompilerProject\\src\\test\\binarysearch.java");//定义一个file对象，用来初始化FileReader
+        File file = new File("src\\test\\binarytree.java");//定义一个file对象，用来初始化FileReader
         FileReader reader = new FileReader(file);//定义一个fileReader对象，用来初始化BufferedReader
         BufferedReader bReader = new BufferedReader(reader);//new一个BufferedReader对象，将文件内容读取到缓存
         StringBuilder sb = new StringBuilder();//定义一个字符串缓存，将字符串存放缓存中
@@ -59,8 +59,11 @@ public class Main {
         for(String key:virtualSuperScope.getSym().keySet()){
             System.out.println("Symbol: " + key + ", ");
         }
-        for(String key:classes.get("BS").getSym().keySet()){
+        for(String key:classes.get("Tree").getSym().keySet()){
             System.out.println("BS Symbol: " + key + ", ");
+            if(key.equals("Compare")){
+
+            }
         }
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 

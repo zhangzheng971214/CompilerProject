@@ -13,25 +13,25 @@ public class classNode extends Symbol implements Scope{  //可将结点也看作
     private boolean valid = true; //标明当前结点是否valid, 默认true，TODO：这种默认参数值的用法
 
     //construction func
-    public classNode(String name, classNode parent, boolean valid){ //带parent结点的构造函数
+    public classNode(String name, classNode parent, Scope upper, boolean valid){ //带parent结点的构造函数
         super(name);
         this.parent = parent;
-        this.upperScope = parent; //上一级作用域就是parent
+        this.upperScope = upper;
         this.valid = valid;
     }
-    public classNode(String name, classNode parentNode){
+    public classNode(String name, classNode parentNode, Scope upper){
         super(name);
         this.parent = parentNode;
-        this.upperScope = parent; //上一级作用域就是parent
+        this.upperScope = upper;
     }
     public classNode(String name, @NotNull String noParentMsg, Scope upper, boolean valid){ //没有parent结点的构造函数
         super(name);
-        this.upperScope = upper; //不带parent的话就需要记录上一级作用域
+        this.upperScope = upper;
         this.valid = valid;
     }
     public classNode(String name, @NotNull String noParentMsg, Scope upper){ //没有parent结点的构造函数
         super(name);
-        this.upperScope = upper; //不带parent的话就需要记录上一级作用域
+        this.upperScope = upper;
     }
 
     //实现scope中的接口函数
