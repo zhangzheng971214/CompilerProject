@@ -33,7 +33,6 @@ public class classNode extends Symbol implements Scope{  //可将结点也看作
     }
 
     //实现scope中的接口函数
-    @Override
     public String getName(){ //TODO:子类中这个方法是否可以不用实现？ ---不行，作为scope接口，current直接声明为scope类型
         return super.getName();
     }
