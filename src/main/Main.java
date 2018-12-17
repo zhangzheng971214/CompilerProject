@@ -7,11 +7,26 @@ import org.antlr.v4.runtime.tree.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public class Main {
+    public static Map<String, classNode> classes = new HashMap<String, classNode>();
+    public static Scope virtualSuperScope = new classNode("<Virtual Super Scope>", "<No Parent Class>", null, true);
+
     public static void main(String[] args) throws Exception {
-        String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
+        //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
+        File file = new File("E:\\IDEA projects\\CompilerProject\\src\\test\\binarysearch.java");//定义一个file对象，用来初始化FileReader
+        FileReader reader = new FileReader(file);//定义一个fileReader对象，用来初始化BufferedReader
+        BufferedReader bReader = new BufferedReader(reader);//new一个BufferedReader对象，将文件内容读取到缓存
+        StringBuilder sb = new StringBuilder();//定义一个字符串缓存，将字符串存放缓存中
+        String s = "";
+        while ((s =bReader.readLine()) != null) {//逐行读取文件内容，不读取换行符和末尾的空格
+            sb.append(s + "\n");//将读取的字符串添加换行符后累加存放在缓存中
+            System.out.println(s);
+        }
+        bReader.close();
+        String stat = sb.toString();
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -33,6 +48,22 @@ public class Main {
 
         // show AST in both console and GUI
         showAST(parser, tree);
+
+        //测试语义分析中的ScopeChecker
+        ParseTreeWalker walker = new ParseTreeWalker();
+        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope);
+        walker.walk(ScopeChecker, tree);
+        for(String key:classes.keySet()){
+            System.out.println("Node: " + key + ", ");
+        }
+        for(String key:virtualSuperScope.getSym().keySet()){
+            System.out.println("Symbol: " + key + ", ");
+        }
+        for(String key:classes.get("BS").getSym().keySet()){
+            System.out.println("BS Symbol: " + key + ", ");
+        }
+        System.out.println("Scope Check Success!"); //TODO:Check if it can work
+
     }
 
     public static void showAST(MiniJavaParser parser, ParseTree tree) {

@@ -8,7 +8,7 @@ goal
     ;
 
 mainClass
-    :   'class' ID
+    :   'class' name=ID
         '{'
             'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')'
             '{' statement '}'
@@ -17,26 +17,27 @@ mainClass
     ;   //finally{System.out.println("class ERROR!");}
 
 classDeclaration
-    :   'class' ID ('extends' ID)?
+    :   'class' name=ID ('extends' parent=ID)?
         '{' varDeclaration* methodDeclaration* '}'
         //{System.out.println("class "+$ID.text);}
     ;
 
 varDeclaration
-    :type ID';'
+    :vtype=type name=ID';'
     ;
 
 methodDeclaration
-    :   'public' type ID formalParameters
+    :   'public' rtype=type name=ID '('formalParameters?')'
         '{'
             varDeclaration*
             statement*
             'return' expression ';'
         '}'
     ;
-
+//修改formalParameters以便于ScopeChecker匹配
 formalParameters
-    :   '(' (type ID (',' type ID)*)? ')'
+    :   ptype=type name=ID
+    |   ptype=type name=ID ',' formalParameters
     ;
 
 statement
