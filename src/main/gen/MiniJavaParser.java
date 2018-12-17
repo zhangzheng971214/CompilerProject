@@ -157,6 +157,7 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class MainClassContext extends ParserRuleContext {
+		public Token name;
 		public List<TerminalNode> ID() { return getTokens(MiniJavaParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(MiniJavaParser.ID, i);
@@ -187,7 +188,7 @@ public class MiniJavaParser extends Parser {
 			setState(27);
 			match(T__0);
 			setState(28);
-			match(ID);
+			((MainClassContext)_localctx).name = match(ID);
 			setState(29);
 			match(T__1);
 			setState(30);
@@ -232,6 +233,8 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class ClassDeclarationContext extends ParserRuleContext {
+		public Token name;
+		public Token parent;
 		public List<TerminalNode> ID() { return getTokens(MiniJavaParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(MiniJavaParser.ID, i);
@@ -272,7 +275,7 @@ public class MiniJavaParser extends Parser {
 			setState(45);
 			match(T__0);
 			setState(46);
-			match(ID);
+			((ClassDeclarationContext)_localctx).name = match(ID);
 			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -281,7 +284,7 @@ public class MiniJavaParser extends Parser {
 				setState(47);
 				match(T__12);
 				setState(48);
-				match(ID);
+				((ClassDeclarationContext)_localctx).parent = match(ID);
 				}
 			}
 
@@ -331,6 +334,8 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class VarDeclarationContext extends ParserRuleContext {
+		public TypeContext vtype;
+		public Token name;
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -356,9 +361,9 @@ public class MiniJavaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(66);
-			type();
+			((VarDeclarationContext)_localctx).vtype = type();
 			setState(67);
-			match(ID);
+			((VarDeclarationContext)_localctx).name = match(ID);
 			setState(68);
 			match(T__13);
 			}
@@ -375,16 +380,18 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class MethodDeclarationContext extends ParserRuleContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
+		public TypeContext rtype;
+		public Token name;
 		public FormalParametersContext formalParameters() {
 			return getRuleContext(FormalParametersContext.class,0);
 		}
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
 		public List<VarDeclarationContext> varDeclaration() {
 			return getRuleContexts(VarDeclarationContext.class);
 		}
@@ -422,9 +429,9 @@ public class MiniJavaParser extends Parser {
 			setState(70);
 			match(T__2);
 			setState(71);
-			type();
+			((MethodDeclarationContext)_localctx).rtype = type();
 			setState(72);
-			match(ID);
+			((MethodDeclarationContext)_localctx).name = match(ID);
 			setState(73);
 			formalParameters();
 			setState(74);
@@ -481,6 +488,8 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public static class FormalParametersContext extends ParserRuleContext {
+		public TypeContext ptype;
+		public Token name;
 		public List<TypeContext> type() {
 			return getRuleContexts(TypeContext.class);
 		}
@@ -520,9 +529,9 @@ public class MiniJavaParser extends Parser {
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__32) | (1L << T__34) | (1L << ID))) != 0)) {
 				{
 				setState(93);
-				type();
+				((FormalParametersContext)_localctx).ptype = type();
 				setState(94);
-				match(ID);
+				((FormalParametersContext)_localctx).name = match(ID);
 				setState(101);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -532,9 +541,9 @@ public class MiniJavaParser extends Parser {
 					setState(95);
 					match(T__15);
 					setState(96);
-					type();
+					((FormalParametersContext)_localctx).ptype = type();
 					setState(97);
-					match(ID);
+					((FormalParametersContext)_localctx).name = match(ID);
 					}
 					}
 					setState(103);
