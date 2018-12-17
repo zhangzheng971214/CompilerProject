@@ -29,7 +29,8 @@ public class methodNode extends Symbol implements Scope{
         return this; //将当前类直接作为Scope类型返回，因为this类已经完整实现了Scope所有接口
     }
 
-    public classNode getParent() { return;} //TODO:????
+    //No use for methodNode
+    public Scope getParent() { return this;}
 
     public void addSymbol(Symbol sym){ //变量声明中的符号加入至varTable中
         varTable.put(sym.getName(), sym);

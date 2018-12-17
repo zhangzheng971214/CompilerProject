@@ -41,7 +41,7 @@ public class classNode extends Symbol implements Scope{  //可将结点也看作
         return this; //将当前类直接作为Scope类型返回，因为this类已经完整实现了Scope所有接口
     }
 
-    public classNode getParent() {
+    public Scope getParent() {
         return parent;
     }
 
