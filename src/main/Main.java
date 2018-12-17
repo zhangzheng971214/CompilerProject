@@ -7,9 +7,12 @@ import org.antlr.v4.runtime.tree.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
+    public static Map<String, classNode> classes = new HashMap<String, classNode>();
+    public static Scope virtualSuperScope = new classNode("<Virtual Super Scope>", "<No Parent Class>", true);
+
     public static void main(String[] args) throws Exception {
         String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
@@ -33,6 +36,13 @@ public class Main {
 
 
         showAST(parser, tree);
+
+        //测试语义分析中的ScopeChecker
+        ParseTreeWalker walker = new ParseTreeWalker();
+        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope);
+        walker.walk(ScopeChecker, tree);
+        System.out.println("Scope Check Success!"); //TODO:Check if it can work
+
     }
 
     public static void showAST(MiniJavaParser parser, ParseTree tree) {

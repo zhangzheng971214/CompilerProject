@@ -1,6 +1,6 @@
 package main;
-import main.gen.MiniJavaBaseListener;
-import main.gen.MiniJavaParser;
+import main.*;
+import main.gen.*;
 
 import java.util.*;
 
@@ -9,14 +9,14 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
     private Map<String, classNode> classNodes = new HashMap<String, classNode>(); //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
 
-    public scopeChecker(Map<String, classNode> classNodes, classNode classnode){ //构造函数
+    public scopeChecker(Map<String, classNode> classNodes, Scope scope){ //构造函数
         this.classNodes = classNodes;
-        this.current = classnode; //指代goal
+        this.current = scope; //指代goal
     }
 
     public void exitScope(){
         //退出当前结点作用域
-        current = current.getParent().getScope(); //转到其parent结点的Scope
+        current = current.getParent(); //转到其parent结点的Scope,classNode也可认为是Scope
     }
 
     //重写MiniJavaBaseListener中的enter方法
@@ -76,9 +76,42 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
 
     @Override
     public void enterMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx){
-        //考察method声明的作用域检查
-        //TODO:method类的实现
+        //考察method声明的作用域检查，检查方法是否已被声明
+        String nodeName = ctx.name.getText();
+        String returnType = ctx.rtype.getText();
+        boolean valid = current.isValid();
 
+        //检查方法是否已被声明，即current符号表中是否有method同名符号
+        if(current.findSymbol(nodeName) != null){
+            System.out.println("方法名重复定义");//TODO:错误输出
+            valid = false;
+        }
+        methodNode method = new methodNode(nodeName, returnType, valid);
+        if(valid){
+            current.addSymbol(method);
+        }
+        current = method;
+    }
+
+    @Override
+    public void exitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx){exitScope();}
+
+    @Override
+    public void enterFormalParameters(MiniJavaParser.FormalParametersContext ctx){
+        //识别到形参结点时，将形参作为符号添加到method中去
+        String paraName = ctx.name.getText();
+        String paraType = ctx.ptype.getText();
+        boolean valid = current.isValid();
+
+        //检查形参是否重复
+        if(current.getNode().findSymbol(paraName) != null){
+            System.out.println("形参重复定义");//TODO:错误输出
+            valid = false;
+        }
+        if(valid){
+            Symbol para = new Symbol(paraName, paraType);
+            ((methodNode)current.getNode()).addPara(para); //addPara()方法是methodNode特有的
+        }
     }
 
 }
