@@ -13,6 +13,7 @@ import java.util.*;
 public class Main {
     public static Map<String, classNode> classes = new HashMap<String, classNode>();
     public static Scope virtualSuperScope = new classNode("<Virtual Super Scope>", "<No Parent Class>", null, true);
+    public static String[] inputLines;
 
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
@@ -27,6 +28,8 @@ public class Main {
         }
         bReader.close();
         String stat = sb.toString();
+
+        inputLines = stat.split("\n");
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 

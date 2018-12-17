@@ -15,11 +15,12 @@ public class SyntaxErrorListener extends BaseErrorListener {
                             Object offendingSymbol,
                             int line, int charPositionInLine,
                             String msg, RecognitionException e) {
-        _exceptionHandler.addException();
-        System.err.println("line " + line + ":" + charPositionInLine + " " + msg);
-        underlineError(recognizer, (Token) offendingSymbol, line, charPositionInLine);
+        _exceptionHandler.addException((Token) offendingSymbol,msg);
+        //System.err.println("line " + line + ":" + charPositionInLine + " " + msg);
+        //underlineError(recognizer, (Token) offendingSymbol, line);
     }
 
+    /*
     protected void underlineError(Recognizer recognizer,
                                   Token offendingToken, int line,
                                   int charPositionInLine) {
@@ -38,5 +39,6 @@ public class SyntaxErrorListener extends BaseErrorListener {
         }
         System.err.println();
     }
+    */
 
 }

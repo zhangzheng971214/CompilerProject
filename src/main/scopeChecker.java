@@ -8,10 +8,12 @@ import java.util.*;
 public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的作用域树，并保存好每个结点的符号表，同时初步检查作用域的语义错误
     private Map<String, classNode> classNodes; //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
+    private ExceptionHandler exceptionHandler;
 
-    public scopeChecker(Map<String, classNode> classNodes, Scope scope){ //构造函数
+    public scopeChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler){ //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
+        this.exceptionHandler=exceptionHandler;
     }
 
     public void exitScope(){
@@ -45,6 +47,7 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         //类声明的过程中需要考察类是否重复定义
         if(classNodes.containsKey(nodeName)) {
             System.out.println("类名重复定义");//TODO:错误输出
+            exceptionHandler.addException(ctx.name, "类名重复定义");
             valid = false;
         }
         classNode classDeclaration = new classNode(nodeName, parent, current, valid); //upperScope默认为parent
