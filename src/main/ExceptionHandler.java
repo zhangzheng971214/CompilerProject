@@ -6,9 +6,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 public class ExceptionHandler {
 
     private int exceptionNum;
+    private String[] inputLines;
 
-    ExceptionHandler() {
+    ExceptionHandler(String input) {
         exceptionNum = 0;
+        inputLines = input.split("\n");
     }
 
     public void printException(String txt) {
@@ -36,14 +38,7 @@ public class ExceptionHandler {
     }
 
     private void underlineError(Token offendingToken) {
-        //RecognitionException recognitionException=new RecognitionException();
-        //Recognizer recognizer=recognitionException.getRecognizer();
-        //CommonTokenStream tokens = (CommonTokenStream) recognizer.getInputStream();
-        //String input = tokens.getTokenSource().getInputStream().toString();
-        //String[] lines = input.split("\n");
-        //String errorLine = lines[line - 1];
-
-        String errorLine = Main.inputLines[offendingToken.getLine() - 1];
+        String errorLine = inputLines[offendingToken.getLine() - 1];
         System.err.println(errorLine);
         for (int i = 0; i < offendingToken.getCharPositionInLine(); i++)
             System.err.print(" ");

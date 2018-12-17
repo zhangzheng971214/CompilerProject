@@ -13,7 +13,6 @@ import java.util.*;
 public class Main {
     public static Map<String, classNode> classes = new HashMap<String, classNode>();
     public static Scope virtualSuperScope = new classNode("<Virtual Super Scope>", "<No Parent Class>", null, true);
-    public static String[] inputLines;
 
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
@@ -29,8 +28,6 @@ public class Main {
         bReader.close();
         String stat = sb.toString();
 
-        inputLines = stat.split("\n");
-
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
@@ -39,7 +36,7 @@ public class Main {
 
         MiniJavaParser parser = new MiniJavaParser(tokens);
 
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        ExceptionHandler exceptionHandler = new ExceptionHandler(stat);
 
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
@@ -54,7 +51,7 @@ public class Main {
 
         //测试语义分析中的ScopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
-        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope);
+        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         for(String key:classes.keySet()){
             System.out.println("Node: " + key + ", ");
