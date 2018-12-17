@@ -54,4 +54,30 @@ public class ScopeTreeCtor extends MiniJavaBaseListener{ //建立每一个rule�
         currentNode = classDeclaration;
     }
 
+    @Override
+    public void exitClassDeclaration(MiniJavaParser.ClassDeclarationContext ctx) {exitScope(); }
+
+    @Override
+    public void enterVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
+        //将此结点添加至Nodes中
+        String varName = ctx.name.getText();
+        String varType = ctx.type.getText(); //对于变量声明，需要记录其symbol的名字和类型
+        boolean valid = currentNode.isValid();
+        //变量的声明过程中需要检查其是否已经在当前作用域下被重复声明
+        if(currentNode.findSymbol(varName) != null){
+            System.out.println("变量名重复定义");//TODO:错误输出
+            valid = false;
+        }
+        if(valid){
+            Symbol var = new Symbol(varName, varType); //新建Symbol对象
+            currentNode.addSymbol(var);
+        }
+    }
+
+    @Override
+    public void enterMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx){
+        //考察method声明的作用域检查
+
+    }
+
 }
