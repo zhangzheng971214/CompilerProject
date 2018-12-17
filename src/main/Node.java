@@ -1,4 +1,6 @@
 package main;
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 //定义抽象语法树中的每个结点类，实际上就是每个规则rule所对应的类，其中维护了结点
@@ -7,17 +9,32 @@ public class Node extends Symbol implements Scope{  //可将结点也看作上�
                                                     // 结点中的scope通过继承Scope来实现
     private Node parentNode;
     private Map<String, Symbol> symTable = new HashMap<String, Symbol>(); //当前结点作用域中的符号表
-    private Scope scope;//直接保存自己的scope？
-    private boolean valid = true; //标明当前结点是否valid, 默认true，TODO：这种用法
+    private Scope scope;//TODO:直接保存自己的scope？
+    private boolean valid = true; //标明当前结点是否valid, 默认true，TODO：这种默认参数值的用法
+    private boolean hasParent = true;
     //construction func
-    public Node(String name, Node parentNode, Scope parentScope, boolean valid){
+    public Node(String name, Node parentNode, boolean valid){ //带parent结点的构造函数
         super(name);
         this.parentNode = parentNode;
-        this.parentScope = parentScope;
         this.valid = valid;
     }
+    public Node(String name, Node parentNode){
+        super(name);
+        this.parentNode = parentNode;
+    }
+    public Node(String name, @NotNull String noParentMsg, boolean valid){ //没有parent结点的构造函数
+        super(name);
+        this.valid = valid;
+        hasParent = false;
+    }
+    public Node(String name, @NotNull String noParentMsg){ //没有parent结点的构造函数
+        super(name);
+        hasParent = false;
+    }
+
     //实现scope中的接口函数
-    public String getName(){
+    @Override
+    public String getName(){ //TODO:scope中是否需要getName()操作
         return super.getName();
     }
 
