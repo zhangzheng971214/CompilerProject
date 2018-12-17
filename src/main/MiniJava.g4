@@ -1,6 +1,8 @@
 // MiniJava complier implemented by Antlr
 grammar MiniJava;
 
+options { language = Java;}
+
 goal
     :   mainClass classDeclaration* EOF
     ;
@@ -21,8 +23,11 @@ classDeclaration
     ;
 
 varDeclaration
-    :   type ID';'
-    ;
+@scope {
+String name;
+}
+    :type ID {$varDeclaration::name = $ID.text;}';'
+    {System.out.println(name)};
 
 methodDeclaration
     :   'public' type ID formalParameters
