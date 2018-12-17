@@ -21,11 +21,16 @@ public class Main {
 
         MiniJavaParser parser = new MiniJavaParser(tokens);
 
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+
         parser.removeErrorListeners(); // remove ConsoleErrorListener
-        parser.addErrorListener(new SyntaxErrorListener()); // add ours
+        parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
         //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
 
+        // begin parsing
         ParseTree tree = parser.goal();
+        exceptionHandler.checkException();
+
 
         showAST(parser, tree);
     }
