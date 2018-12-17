@@ -6,18 +6,21 @@ import java.util.*;
 //TODO:method结点需要与类结点分开实现，因为method中需要单独处理返回类型以及形参列表
 public class methodNode extends Symbol implements Scope{
     private String returnType;
-    private Map<String, Symbol> paraTable = new HashMap<String, Symbol>(); //保存形参中的符号表
-    private Map<String, Symbol> varTable = new HashMap<String, Symbol>(); //保存局部变量符号表
+    private Scope upperScope;
+    public Map<String, Symbol> paraTable = new HashMap<String, Symbol>(); //保存形参中的符号表
+    public Map<String, Symbol> varTable = new HashMap<String, Symbol>(); //保存局部变量符号表
     private boolean valid = true; //TODO:CHECK!
 
-    public methodNode(String name, String returnType, boolean valid){
+    public methodNode(String name, String returnType, Scope upper, boolean valid){
         super(name);
         this.returnType = returnType;
+        this.upperScope = upper;
         this.valid = valid;
     }
-    public methodNode(String name, String returnType){
+    public methodNode(String name, String returnType, Scope upper){
         super(name);
         this.returnType = returnType;
+        this.upperScope = upper;
     }
 
     //重写Scope接口中的函数，大致与classNode类似
@@ -29,8 +32,9 @@ public class methodNode extends Symbol implements Scope{
         return this; //将当前类直接作为Scope类型返回，因为this类已经完整实现了Scope所有接口
     }
 
-    //No use for methodNode
-    public Scope getParent() { return this;}
+    public Scope getUpperScope() {
+        return upperScope;
+    }
 
     public void addSymbol(Symbol sym){ //变量声明中的符号加入至varTable中
         varTable.put(sym.getName(), sym);
@@ -45,6 +49,11 @@ public class methodNode extends Symbol implements Scope{
         if(paraTable.containsKey(name))
             return paraTable.get(name);
         return varTable.get(name); //参数表中没有就从var表中查找
+    }
+
+    //For Test
+    public Map<String, Symbol> getSym() {
+        return varTable;
     }
 
     //methodNode中用于特别处理的函数

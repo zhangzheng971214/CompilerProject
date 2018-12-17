@@ -27,16 +27,17 @@ varDeclaration
     ;
 
 methodDeclaration
-    :   'public' rtype=type name=ID formalParameters
+    :   'public' rtype=type name=ID '('formalParameters?')'
         '{'
             varDeclaration*
             statement*
             'return' expression ';'
         '}'
     ;
-
+//修改formalParameters以便于ScopeChecker匹配
 formalParameters
-    :   '(' (ptype=type name=ID (',' ptype=type name=ID)*)? ')'
+    :   ptype=type name=ID
+    |   ptype=type name=ID ',' formalParameters
     ;
 
 statement
