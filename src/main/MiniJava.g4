@@ -23,11 +23,8 @@ classDeclaration
     ;
 
 varDeclaration
-@scope {
-String name;
-}
-    :type ID {$varDeclaration::name = $ID.text;}';'
-    {System.out.println(name)};
+    :type ID';'
+    ;
 
 methodDeclaration
     :   'public' type ID formalParameters
