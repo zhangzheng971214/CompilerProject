@@ -14,13 +14,13 @@ import java.util.*;
 
 public class Main {
     public static Map<String, classNode> classes = new HashMap<String, classNode>();
-    public static Scope virtualSuperScope = new classNode("<Virtual Super Scope>", "<No Parent Class>", null, true);
+    public static Scope SuperScope = new classNode("<Super Scope>", "<No Parent Class>", null, true);
 
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
-        String stat = readFromFile("src\\test\\binarysearch.java");//For Windows
+        String stat = readFromFile("src\\test\\treevisitor.java");//For Windows
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -43,7 +43,7 @@ public class Main {
 
         //测试语义分析中的scopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
-        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope, exceptionHandler);
+        scopeChecker ScopeChecker = new scopeChecker(classes, SuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         /*for (String key : classes.keySet()) {
             System.out.println("Node: " + key + ", ");
@@ -60,7 +60,7 @@ public class Main {
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
         //测试语义分析中的symbolChecker
-        symbolChecker SymbolChecker = new symbolChecker(classes, virtualSuperScope, exceptionHandler);
+        symbolChecker SymbolChecker = new symbolChecker(classes, SuperScope, exceptionHandler);
         walker.walk(SymbolChecker, tree);
         //TODO:Test Code!!!
 

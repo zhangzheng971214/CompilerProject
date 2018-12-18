@@ -52,8 +52,17 @@ public class methodNode extends Symbol implements Scope{
     }
 
     public Symbol findWholeSym(String name){
-        //对于method而言，没有parent的说法，所以也返回findLocalSym()的结果即可
-        return findLocalSym(name);
+        //在当前作用域以及上一级的作用域中查找
+        Scope upper;
+        upper = getUpperScope();
+        if(varTable.containsKey(name)) //在var符号表中查找
+            return varTable.get(name);
+        else if(paraTable.containsKey(name)) //在para符号表中查找
+            return paraTable.get(name);
+        else if(!upper.getName().equals("<Super Scope>"))//未找到则需要递归考察upper作用域中能否找到
+            return upper.findWholeSym(name);
+        //upper作用域也没有的话，则说明此符号无有效声明，返回null
+        return null;
     }
 
     //For Test

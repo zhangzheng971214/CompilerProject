@@ -1,6 +1,7 @@
 package main;
 
 import main.gen.*;
+import org.antlr.v4.runtime.Token;
 
 import java.util.*;
 
@@ -64,22 +65,6 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             classNodes.put(nodeName, classDeclaration); //添加到全局的classNodes中
         }
         current = classDeclaration; //当前处理作用域设为mainClass的Scope
-
-        //<循环继承>：此处在类声明时检查是否有循环继承
-        if (ctx.parent != null) {
-            //TODO:Check Code!!!
-            //不断往上找parent，如果找到自己，则报错；如果找到空parent,则跳出
-            classNode parent = classNodes.get(ctx.parent.getText());
-            while (true) {
-                if (nodeName.equals(parent.getName())) {
-                    System.out.println("循环继承！");//TODO:错误输出
-                    break;
-                }
-                if (!parent.hasParent()) //TODO:怎么判断no parent
-                    break;
-                parent = parent.getParent();
-            }
-        }
     }
 
     @Override
@@ -122,7 +107,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         boolean valid = current.isValid();
 
         //检查方法是否已被声明，即current符号表中是否有method同名符号
-        if (current.findLocalSym(nodeName) != null) {
+        if (current.findLocalSym(nodeName) != null) { //TODO:
             //System.out.println("方法名重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "方法名重复定义");
             valid = false;

@@ -77,14 +77,15 @@ public class classNode extends Symbol implements Scope {  //可将结点也看�
     }
 
     public Symbol findWholeSym(String name){
-        //在当前符号表以及parent的符号表中查找符号
+        //在当前作用域以及上一级的作用域中查找
+        Scope upper;
+        upper = getUpperScope();
         if(symTable.containsKey(name)) //在当前符号表中查找
             return symTable.get(name);
-        else if(hasParent){ //未找到则需要递归考察parent符号表中能否找到
-            return parent.findWholeSym(name);
-        }
-        else //parent结点也没有的话，则说明当前作用域中无此符号，返回null
-            return null;
+        else if(!upper.getName().equals("<Super Scope>"))//未找到则需要递归考察upper作用域中能否找到
+            return upper.findWholeSym(name);
+        //upper作用域也没有的话，则说明此符号无有效声明，返回null
+        return null;
     }
 
     //For Test

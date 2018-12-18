@@ -40,6 +40,22 @@ public class symbolChecker extends MiniJavaBaseListener {
         //进入作用域
         String nodeName = ctx.name.getText();
         current = classNodes.get(nodeName); //当前处理作用域设为Class的Scope
+
+        //<循环继承>：此处在类声明时检查是否有循环继承
+        if (ctx.parent != null) {
+            //TODO:Check Code!!!
+            //不断往上找parent，如果找到自己，则报错；如果找到空parent,则跳出
+            classNode parent = classNodes.get(ctx.parent.getText());
+            while (true) {
+                if (nodeName.equals(parent.getName())) { //TODO:Error还没解决
+                    exceptionHandler.addException(ctx.name, nodeName+"循环继承");
+                    break;
+                }
+                if (!parent.hasParent()) //TODO:怎么判断no parent
+                    break;
+                parent = parent.getParent();
+            }
+        }
     }
 
     @Override
@@ -118,7 +134,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         boolean isDefined = false;
         for (String key : classNodes.keySet()) {
             //遍历每个类的符号表
-            if (classNodes.get(key).findLocalSym(callName) != null) { //此处查找局部的符号就够了，因为每个类都要遍历到
+            if (classNodes.get(key).findWholeSym(callName) != null) { //此处查找局部的符号就够了，因为每个类都要遍历到
                 isDefined = true;
                 break; //找到定义时退出
             }

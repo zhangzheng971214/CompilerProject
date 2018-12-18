@@ -48,7 +48,7 @@ class TV {
 }
 
 
-class Tree{
+class Tree extends MyVisitor{
   Tree left ;
   Tree right;
   int key ;
@@ -328,7 +328,7 @@ class Tree{
 
 
 
-class Visitor {
+class Visitor extends Tree{
   Tree l ;
   Tree r ;
 
