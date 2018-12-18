@@ -11,7 +11,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
     private Scope current; //记录当前处理的作用域，可为class也可为method
     private ExceptionHandler exceptionHandler;
 
-    public scopeChecker(Map<String, classNode> classNodes, Scope scope) { //构造函数
+    public scopeChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
         this.exceptionHandler = exceptionHandler;
