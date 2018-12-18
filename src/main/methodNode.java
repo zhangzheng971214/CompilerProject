@@ -24,7 +24,7 @@ public class methodNode extends Symbol implements Scope{
     }
 
     //重写Scope接口中的函数，大致与classNode类似
-    public String getName(){
+    public String getText(){
         return super.getName();
     }
 
@@ -59,7 +59,7 @@ public class methodNode extends Symbol implements Scope{
             return varTable.get(name);
         else if(paraTable.containsKey(name)) //在para符号表中查找
             return paraTable.get(name);
-        else if(!upper.getName().equals("<Super Scope>"))//未找到则需要递归考察upper作用域中能否找到
+        else if(!upper.getText().equals("<Super Scope>"))//未找到则需要递归考察upper作用域中能否找到
             return upper.findWholeSym(name);
         //upper作用域也没有的话，则说明此符号无有效声明，返回null
         return null;

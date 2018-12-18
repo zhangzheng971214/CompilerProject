@@ -43,17 +43,24 @@ public class symbolChecker extends MiniJavaBaseListener {
 
         //<循环继承>：此处在类声明时检查是否有循环继承
         if (ctx.parent != null) {
+            //System.out.println("test: "+nodeName);
             //TODO:Check Code!!!
             //不断往上找parent，如果找到自己，则报错；如果找到空parent,则跳出
-            classNode parent = classNodes.get(ctx.parent.getText());
-            while (true) {
-                if (nodeName.equals(parent.getName())) { //TODO:Error还没解决
-                    exceptionHandler.addException(ctx.name, nodeName+"循环继承");
+            String superClass = ctx.parent.getText();
+            for (int i = 0; i < classNodes.size(); i++) {
+                //System.out.println("parent is "+ classNodes.get(parent).getName());
+                if (superClass.equals(nodeName)) { //TODO:Error还没解决
+                    exceptionHandler.addException(ctx.name, nodeName + "循环继承");
+                    //exceptionHandler.checkException();
                     break;
                 }
-                if (!parent.hasParent()) //TODO:怎么判断no parent
+                if (classNodes.get(superClass).hasParent()) { //TODO:怎么判断no parent
+                    //System.out.println(parent + " has parent.");
+                    classNode p = classNodes.get(superClass);
+                    //System.out.println(p.getText());
+                    superClass = p.getSuperClass();
+                } else
                     break;
-                parent = parent.getParent();
             }
         }
     }
@@ -65,15 +72,34 @@ public class symbolChecker extends MiniJavaBaseListener {
 
     @Override
     public void enterVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
-        //暂时不用做事
+        //进行类型定义的检查
+        String varName = ctx.name.getText();
+        String varType = ctx.vtype.getText();
+        //<类型定义检查>：检查变量声明的类型是否已定义
+        if (varType.equals("int")
+                || varType.equals("int[]")
+                || varType.equals("boolean")
+                || classNodes.containsKey(varType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "变量类型" + varType + "不存在"); //TODO:能不能弹出type
+        }
     }
 
     @Override
     public void enterMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
         //进入作用域
         String methodName = ctx.name.getText();
+        String returnType = ctx.rtype.getText();
         //TODO:CHECK!!!
         current = (methodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
+        //<类型定义检查>：检查method返回类型是否已定义
+        if (returnType.equals("int")
+                || returnType.equals("int[]")
+                || returnType.equals("boolean")
+                || classNodes.containsKey(returnType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "返回类型" + returnType + "不存在"); //TODO:能不能弹出type
+        }
     }
 
     @Override
@@ -83,6 +109,19 @@ public class symbolChecker extends MiniJavaBaseListener {
 
     @Override
     public void enterFormalParameters(MiniJavaParser.FormalParametersContext ctx) {
+        //检查类型是否定义
+        String paraName = ctx.name.getText();
+        String paraType = ctx.ptype.getText();
+
+        //<类型定义检查>：检查形参中的类型是否已定义
+        //TODO:Check it!!!
+        if (paraType.equals("int")
+                || paraType.equals("int[]")
+                || paraType.equals("boolean")
+                || classNodes.containsKey(paraType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "形参类型" + paraType + "不存在"); //TODO:能不能弹出type
+        }
     }
 
     @Override

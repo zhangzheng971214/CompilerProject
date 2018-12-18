@@ -3,7 +3,7 @@ package main;
 import java.util.*;
 
 public interface Scope {
-    public String getName();
+    public String getText();
 
     public Scope getNode(); //返回Scope对应的class或者method结点
 

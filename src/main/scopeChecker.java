@@ -45,6 +45,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         //将此结点添加至classNodes中
         //TODO:考察parent结点是否是current结点
         String nodeName = ctx.name.getText();
+        String superClassName = ctx.parent != null ? ctx.parent.getText() : "<No Parent>";
         boolean valid = true; //TODO:current.isValid();
         classNode classDeclaration;
         //类声明的过程中需要考察类是否重复定义
@@ -54,11 +55,8 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             valid = false;
         }
         //构造class结点
-        if (ctx.parent != null) {
-            classDeclaration = new classNode(nodeName, classNodes.get(ctx.parent.getText()), current, valid); //upperScope默认为parent
-        } else {
-            classDeclaration = new classNode(nodeName, "<No Parent>", current, valid);
-        }
+        //System.out.println("class node: " + nodeName + "; its parent is " + ctx.parent.getText());
+        classDeclaration = new classNode(nodeName, superClassName, current, valid); //upperScope默认为parent
         //结点添加到classNode中，以及作为符号加入current的作用域
         if (valid) { //TODO:需不需要考察valid？
             current.addSymbol(classDeclaration);
@@ -88,15 +86,6 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             Symbol var = new Symbol(varName, varType); //新建Symbol对象
             current.addSymbol(var);
         }
-
-        //<类型定义检查>：检查变量声明的类型是否已定义
-        if (varType.equals("int")
-                || varType.equals("int[]")
-                || varType.equals("boolean")
-                || classNodes.containsKey(varType)) ;
-        else { //未找到type
-            exceptionHandler.addException(ctx.name, "变量类型" + varType + "不存在");
-        }
     }
 
     @Override
@@ -117,15 +106,6 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             current.addSymbol(method);
         }
         current = method;
-
-        //<类型定义检查>：检查method返回类型是否已定义
-        if (returnType.equals("int")
-                || returnType.equals("int[]")
-                || returnType.equals("boolean")
-                || classNodes.containsKey(returnType)) ;
-        else { //未找到type
-            exceptionHandler.addException(ctx.name, "返回类型" + returnType + "不存在");
-        }
     }
 
     @Override
@@ -149,16 +129,6 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         if (valid) {
             Symbol para = new Symbol(paraName, paraType);
             ((methodNode) current.getNode()).addPara(para); //addPara()方法是methodNode特有的
-        }
-
-        //<类型定义检查>：检查形参中的类型是否已定义
-        //TODO:Check it!!!
-        if (paraType.equals("int")
-                || paraType.equals("int[]")
-                || paraType.equals("boolean")
-                || classNodes.containsKey(paraType)) ;
-        else { //未找到type
-            exceptionHandler.addException(ctx.name, "形参类型" + paraType + "不存在");
         }
     }
 }
