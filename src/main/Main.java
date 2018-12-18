@@ -1,11 +1,10 @@
 package main;
 
 import main.gen.*;
-import org.antlr.v4.runtime.*;
 import org.antlr.v4.gui.*;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
-import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -19,9 +18,10 @@ public class Main {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
-        String stat = readFromFile("src\\test\\binarytree.java");//For Windows
 
-        ANTLRInputStream in = new ANTLRInputStream(stat);
+        //String stat = readFromFile("src\\test\\binarytree.java");//For Windows
+        //ANTLRInputStream in = new ANTLRInputStream(stat);
+        ANTLRInputStream in = new ANTLRInputStream(System.in);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
 
@@ -29,7 +29,7 @@ public class Main {
 
         MiniJavaParser parser = new MiniJavaParser(tokens);
 
-        ExceptionHandler exceptionHandler = new ExceptionHandler(stat);
+        ExceptionHandler exceptionHandler = new ExceptionHandler(in.toString());
 
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
@@ -44,6 +44,7 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
+        exceptionHandler.checkException();
         /*for (String key : classes.keySet()) {
             System.out.println("Node: " + key + ", ");
         }
@@ -61,13 +62,13 @@ public class Main {
         //测试语义分析中的symbolChecker
         SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
         walker.walk(SymbolChecker, tree);
+        exceptionHandler.checkException();
         //TODO:Test Code!!!
-
 
 
         //TypeChecker typeChecker=new TypeChecker(classes, SuperScope,exceptionHandler);
         //walker.walk(typeChecker, tree);
-        exceptionHandler.checkException();
+        //exceptionHandler.checkException();
         // show AST in both console and GUI
         showAST(parser, tree);
         //这里是程序末尾 不要在这后面写代码
@@ -84,8 +85,7 @@ public class Main {
                 sb.append(s + "\n");                    //将读取的字符串添加换行符后累加存放在缓存中
             }
             bReader.close();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.err.println(e);
             System.exit(-2);
         }
