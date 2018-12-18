@@ -40,8 +40,12 @@ public class ExceptionHandler {
     private void underlineError(Token offendingToken) {
         String errorLine = inputLines[offendingToken.getLine() - 1];
         System.err.println(errorLine);
-        for (int i = 0; i < offendingToken.getCharPositionInLine(); i++)
-            System.err.print(" ");
+        for (int i = 0; i < offendingToken.getCharPositionInLine(); i++) {
+            if (errorLine.charAt(i) == '\t')
+                System.err.print("\t");
+            else
+                System.err.print(" ");
+        }
         int start = offendingToken.getStartIndex();
         int stop = offendingToken.getStopIndex();
         if (start >= 0 && stop >= 0) {

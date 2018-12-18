@@ -37,8 +37,6 @@ public class Main {
         ParseTree tree = parser.goal();
         exceptionHandler.checkException();
 
-        // show AST in both console and GUI
-        showAST(parser, tree);
 
         //测试语义分析中的ScopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
@@ -50,7 +48,7 @@ public class Main {
         for (String key : virtualSuperScope.getSym().keySet()) {
             System.out.println("Symbol: " + key + ", ");
         }
-        for(String key:classes.get("Tree").getSym().keySet()){
+        for(String key:classes.get("BS").getSym().keySet()){
             System.out.println("BS Symbol: " + key + ", ");
             if(key.equals("Compare")){
 
@@ -58,6 +56,16 @@ public class Main {
         }
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
+
+
+
+
+
+
+        exceptionHandler.checkException();
+        // show AST in both console and GUI
+        showAST(parser, tree);
+        //这里是程序末尾 不要在这后面写代码
     }
 
     public static String readFromFile(String path) {

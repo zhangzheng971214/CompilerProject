@@ -46,7 +46,7 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         classNode parent = ctx.parent!=null ? classNodes.get(ctx.parent.getText()) : null; //获得parent的名
         //类声明的过程中需要考察类是否重复定义
         if(classNodes.containsKey(nodeName)) {
-            System.out.println("类名重复定义");//TODO:错误输出
+            //System.out.println("类名重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "类名重复定义");
             valid = false;
         }
@@ -69,7 +69,8 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         boolean valid = current.isValid();
         //变量的声明过程中需要检查其是否已经在当前作用域下被重复声明
         if(current.findSymbol(varName) != null){
-            System.out.println("变量名重复定义");//TODO:错误输出
+            //System.out.println("变量名重复定义");//TODO:错误输出
+            exceptionHandler.addException(ctx.name, "变量名重复定义");
             valid = false;
         }
         if(valid){
@@ -87,7 +88,8 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
 
         //检查方法是否已被声明，即current符号表中是否有method同名符号
         if(current.findSymbol(nodeName) != null){
-            System.out.println("方法名重复定义");//TODO:错误输出
+            //System.out.println("方法名重复定义");//TODO:错误输出
+            exceptionHandler.addException(ctx.name, "方法名重复定义");
             valid = false;
         }
         methodNode method = new methodNode(nodeName, returnType, current, valid);
@@ -110,6 +112,7 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         //检查形参是否重复
         if(current.getNode().findSymbol(paraName) != null){
             System.out.println("形参重复定义");//TODO:错误输出
+            exceptionHandler.addException(ctx.name, "形参重复定义");
             valid = false;
         }
         if(valid){
