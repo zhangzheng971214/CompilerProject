@@ -57,7 +57,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         //进入作用域
         String methodName = ctx.name.getText();
         //TODO:CHECK!!!
-        current = (methodNode) current.findSymbol(methodName); //current作用域中找到method结点，返回出来
+        current = (methodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
     }
 
     @Override
@@ -73,7 +73,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         boolean valid = current.isValid();
 
         //检查形参是否重复
-        if (current.getNode().findSymbol(paraName) != null) {
+        if (current.getNode().findLocalSym(paraName) != null) {
             System.out.println("形参重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "形参重复定义");
             valid = false;
@@ -99,7 +99,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         //<symbol声明>：检查使用的symbol是否声明过
         //赋值语句，在当前作用域及父类作用域中找符号
         String assignName = ctx.assignName.getText();
-        if (current.findSymbol(assignName) == null) { //TODO:修改find()，查找整个作用域，包括parent
+        if (current.findWholeSym(assignName) == null) { //查找整个作用域，包括parent
             exceptionHandler.addException(ctx.assignName, "符号" + assignName + "未定义");
         }
     }
@@ -109,7 +109,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         //<symbol声明>：检查使用的symbol是否声明过
         //赋值语句，在当前作用域及父类作用域中找符号
         String aAssignName = ctx.aAssignName.getText();
-        if (current.findSymbol(aAssignName) == null) { //TODO:修改find()，查找整个作用域，包括parent
+        if (current.findWholeSym(aAssignName) == null) { //查找整个作用域，包括parent
             exceptionHandler.addException(ctx.aAssignName, "符号" + aAssignName + "未定义");
         }
     }
@@ -119,7 +119,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         //<symbol声明>：检查使用的symbol是否声明过
         //表达式中的符号，在当前作用域及父类作用域中找符号
         String idName = ctx.idName.getText();
-        if (current.findSymbol(idName) == null) { //TODO:修改find()，查找整个作用域，包括parent
+        if (current.findWholeSym(idName) == null) { //查找整个作用域，包括parent
             exceptionHandler.addException(ctx.idName, "符号" + idName + "未定义");
         }
     }
@@ -143,7 +143,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         boolean isDefined = false;
         for (String key : classNodes.keySet()) {
             //遍历每个类的符号表
-            if (classNodes.get(key).findSymbol(callName) != null) { //TODO:此处查找局部的符号就够了
+            if (classNodes.get(key).findLocalSym(callName) != null) { //此处查找局部的符号就够了，因为每个类都要遍历到
                 isDefined = true;
                 break; //找到定义时退出
             }

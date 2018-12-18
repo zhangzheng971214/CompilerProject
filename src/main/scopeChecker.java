@@ -1,6 +1,5 @@
 package main;
 
-import main.*;
 import main.gen.*;
 
 import java.util.*;
@@ -95,7 +94,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         String varType = ctx.vtype.getText(); //对于变量声明，需要记录其symbol的名字和类型
         boolean valid = current.isValid();
         //变量的声明过程中需要检查其是否已经在当前作用域下被重复声明
-        if (current.findSymbol(varName) != null) {
+        if (current.findLocalSym(varName) != null) {
             //System.out.println("变量名重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "变量名重复定义");
             valid = false;
@@ -123,7 +122,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         boolean valid = current.isValid();
 
         //检查方法是否已被声明，即current符号表中是否有method同名符号
-        if (current.findSymbol(nodeName) != null) {
+        if (current.findLocalSym(nodeName) != null) {
             //System.out.println("方法名重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "方法名重复定义");
             valid = false;
@@ -157,7 +156,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         boolean valid = current.isValid();
 
         //检查形参是否重复
-        if (current.getNode().findSymbol(paraName) != null) {
+        if (current.getNode().findLocalSym(paraName) != null) {
             System.out.println("形参重复定义");//TODO:错误输出
             exceptionHandler.addException(ctx.name, "形参重复定义");
             valid = false;

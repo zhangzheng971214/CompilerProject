@@ -13,7 +13,9 @@ public interface Scope {
 
     public boolean isValid();
 
-    public Symbol findSymbol(String name);
+    public Symbol findLocalSym(String name);
+
+    public Symbol findWholeSym(String name);
 
     //For Test
     public Map<String, Symbol> getSym();

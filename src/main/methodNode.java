@@ -44,11 +44,16 @@ public class methodNode extends Symbol implements Scope{
         return valid;
     }
 
-    public Symbol findSymbol(String name) { //遍历当前结点符号表，根据name，找到symbol对象
+    public Symbol findLocalSym(String name) { //遍历当前结点符号表，根据name，找到symbol对象
         //method结点中找符号需要遍历参数表和变量表
         if(paraTable.containsKey(name))
             return paraTable.get(name);
         return varTable.get(name); //参数表中没有就从var表中查找
+    }
+
+    public Symbol findWholeSym(String name){
+        //对于method而言，没有parent的说法，所以也返回findLocalSym()的结果即可
+        return findLocalSym(name);
     }
 
     //For Test

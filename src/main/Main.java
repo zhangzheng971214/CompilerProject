@@ -41,7 +41,7 @@ public class Main {
         exceptionHandler.checkException();
 
 
-        //测试语义分析中的ScopeChecker
+        //测试语义分析中的scopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
         scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
@@ -59,8 +59,10 @@ public class Main {
         }
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
-
-
+        //测试语义分析中的symbolChecker
+        symbolChecker SymbolChecker = new symbolChecker(classes, virtualSuperScope, exceptionHandler);
+        walker.walk(ScopeChecker, tree);
+        //TODO:Test Code!!!
 
 
 

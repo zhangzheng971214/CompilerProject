@@ -72,8 +72,19 @@ public class classNode extends Symbol implements Scope {  //可将结点也看�
         return valid;
     }
 
-    public Symbol findSymbol(String name) { //遍历当前结点符号表，根据name，找到symbol对象
+    public Symbol findLocalSym(String name) {
         return symTable.get(name);
+    }
+
+    public Symbol findWholeSym(String name){
+        //在当前符号表以及parent的符号表中查找符号
+        if(symTable.containsKey(name)) //在当前符号表中查找
+            return symTable.get(name);
+        else if(hasParent){ //未找到则需要递归考察parent符号表中能否找到
+            return parent.findWholeSym(name);
+        }
+        else //parent结点也没有的话，则说明当前作用域中无此符号，返回null
+            return null;
     }
 
     //For Test
