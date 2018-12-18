@@ -51,7 +51,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 //System.out.println("parent is "+ classNodes.get(parent).getName());
                 if (superClass.equals(nodeName)) { //TODO:Error还没解决
                     exceptionHandler.addException(ctx.name, nodeName + "循环继承");
-                    //exceptionHandler.checkException();
+                    exceptionHandler.checkException();
                     break;
                 }
                 if (classNodes.get(superClass).hasParent()) { //TODO:怎么判断no parent
@@ -73,7 +73,6 @@ public class SymbolChecker extends MiniJavaBaseListener {
     @Override
     public void enterVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
         //进行类型定义的检查
-        String varName = ctx.name.getText();
         String varType = ctx.vtype.getText();
         //<类型定义检查>：检查变量声明的类型是否已定义
         if (varType.equals("int")
@@ -81,7 +80,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || varType.equals("boolean")
                 || classNodes.containsKey(varType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "变量类型" + varType + "不存在"); //TODO:能不能弹出type
+            exceptionHandler.addException(ctx.vtype.getStart(), "变量类型" + varType + "不存在"); //TODO:能不能弹出type
         }
     }
 
@@ -98,7 +97,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || returnType.equals("boolean")
                 || classNodes.containsKey(returnType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "返回类型" + returnType + "不存在"); //TODO:能不能弹出type
+            exceptionHandler.addException(ctx.rtype.getStart(), "返回类型" + returnType + "不存在"); //TODO:能不能弹出type
         }
     }
 
@@ -110,7 +109,6 @@ public class SymbolChecker extends MiniJavaBaseListener {
     @Override
     public void enterFormalParameters(MiniJavaParser.FormalParametersContext ctx) {
         //检查类型是否定义
-        String paraName = ctx.name.getText();
         String paraType = ctx.ptype.getText();
 
         //<类型定义检查>：检查形参中的类型是否已定义
@@ -120,7 +118,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || paraType.equals("boolean")
                 || classNodes.containsKey(paraType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "形参类型" + paraType + "不存在"); //TODO:能不能弹出type
+            exceptionHandler.addException(ctx.ptype.getStart(), "形参类型" + paraType + "不存在"); //TODO:能不能弹出type
         }
     }
 
