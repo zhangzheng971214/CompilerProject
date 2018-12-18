@@ -41,31 +41,31 @@ formalParameters
     ;
 
 statement
-    :   '{' statement* '}'                                  # nestedStmt
-    |   'if' '(' expression ')' statement 'else' statement  # ifStmt
-    |   'while' '(' expression ')' statement                # whileStmt
-    |   'System.out.println' '(' expression ')' ';'         # printStmt
-    |   assignName=ID '=' expression ';'                               # assignStmt
+    :   '{' statement* '}'                                              # nestedStmt
+    |   'if' '(' condition=expression ')' statement 'else' statement    # ifStmt
+    |   'while' '(' expression ')' statement                            # whileStmt
+    |   'System.out.println' '(' expression ')' ';'                     # printStmt
+    |   assignName=ID '=' expression ';'                                # assignStmt
     |   aAssignName=ID '[' expression ']' '=' expression ';'            # arrayAssignStmt
     ;
 
 expression
-    :   expression '[' expression ']'                               # arrayExpr
-    |   expression '.' 'length'                                     # lengthExpr
-    |   expression '.' callName=ID '(' (expression (',' expression)*)? ')'   # callExpr
-    |   expression '*'  expression                                  # mulExpr
-    |   expression '+'  expression                                  # addExpr
-    |   expression '-'  expression                                  # subExpr
-    |   expression '<'  expression                                  # compareExpr
-    |   expression '&&' expression                                  # andExpr
-    |   INT                                                         # intExpr
-    |   ('true' | 'false')                                          # boolExpr
-    |   idName=ID                                                          # idExpr
-    |	'this'                                                      # thisExpr
-    |	'new' 'int' '[' expression ']'                              # newArrayExpr
+    :   expression '[' expression ']'                                       # arrayExpr
+    |   expression '.' 'length'                                             # lengthExpr
+    |   expression '.' callName=ID '(' (expression (',' expression)*)? ')'  # callExpr
+    |   expression '*'  expression                                          # mulExpr
+    |   expression '+'  expression                                          # addExpr
+    |   expression '-'  expression                                          # subExpr
+    |   expression '<'  expression                                          # compareExpr
+    |   expression '&&' expression                                          # andExpr
+    |   INT                                                                 # intExpr
+    |   ('true' | 'false')                                                  # boolExpr
+    |   idName=ID                                                           # idExpr
+    |	'this'                                                              # thisExpr
+    |	'new' 'int' '[' expression ']'                                      # newArrayExpr
     |	'new' newName=ID '(' ')'                                            # newIdExpr
-    |	'!' expression                                              # notExpr
-    |	'(' expression ')'                                          # nestedExpr
+    |	'!' expression                                                      # notExpr
+    |	'(' expression ')'                                                  # nestedExpr
     ;
 
 type

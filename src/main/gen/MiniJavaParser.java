@@ -1,4 +1,4 @@
-// Generated from D:/Github/CompilerProject/src/main\MiniJava.g4 by ANTLR 4.7
+// Generated from E:/IDEA projects/CompilerProject/src/main\MiniJava.g4 by ANTLR 4.7
 package main.gen;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -608,14 +608,15 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class IfStmtContext extends StatementContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
+		public ExpressionContext condition;
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
 		}
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
 		public IfStmtContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
@@ -721,7 +722,7 @@ public class MiniJavaParser extends Parser {
 				setState(115);
 				match(T__6);
 				setState(116);
-				expression(0);
+				((IfStmtContext)_localctx).condition = expression(0);
 				setState(117);
 				match(T__10);
 				setState(118);
