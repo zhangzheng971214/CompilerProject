@@ -645,10 +645,11 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class AssignStmtContext extends StatementContext {
-		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
+		public Token assignName;
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
+		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
 		public AssignStmtContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -660,13 +661,14 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class ArrayAssignStmtContext extends StatementContext {
-		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
+		public Token aAssignName;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
+		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
 		public ArrayAssignStmtContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -767,7 +769,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(134);
-				match(ID);
+				((AssignStmtContext)_localctx).assignName = match(ID);
 				setState(135);
 				match(T__20);
 				setState(136);
@@ -781,7 +783,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(139);
-				match(ID);
+				((ArrayAssignStmtContext)_localctx).aAssignName = match(ID);
 				setState(140);
 				match(T__8);
 				setState(141);
@@ -861,6 +863,7 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class NewIdExprContext extends ExpressionContext {
+		public Token newName;
 		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
 		public NewIdExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -977,6 +980,7 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class CallExprContext extends ExpressionContext {
+		public Token callName;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -1009,6 +1013,7 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	public static class IdExprContext extends ExpressionContext {
+		public Token idName;
 		public TerminalNode ID() { return getToken(MiniJavaParser.ID, 0); }
 		public IdExprContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1107,7 +1112,7 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(152);
-				match(ID);
+				((IdExprContext)_localctx).idName = match(ID);
 				}
 				break;
 			case 4:
@@ -1144,7 +1149,7 @@ public class MiniJavaParser extends Parser {
 				setState(160);
 				match(T__31);
 				setState(161);
-				match(ID);
+				((NewIdExprContext)_localctx).newName = match(ID);
 				setState(162);
 				match(T__6);
 				setState(163);
@@ -1283,7 +1288,7 @@ public class MiniJavaParser extends Parser {
 						setState(196);
 						match(T__21);
 						setState(197);
-						match(ID);
+						((CallExprContext)_localctx).callName = match(ID);
 						setState(198);
 						match(T__6);
 						setState(207);

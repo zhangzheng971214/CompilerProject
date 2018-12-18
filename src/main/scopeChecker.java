@@ -111,7 +111,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
                 || varType.equals("boolean")
                 || classNodes.containsKey(varType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "变量类型"+varType+"不存在");
+            exceptionHandler.addException(ctx.name, "变量类型" + varType + "不存在");
         }
     }
 
@@ -140,7 +140,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
                 || returnType.equals("boolean")
                 || classNodes.containsKey(returnType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "返回类型"+returnType+"不存在");
+            exceptionHandler.addException(ctx.name, "返回类型" + returnType + "不存在");
         }
     }
 
@@ -174,14 +174,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
                 || paraType.equals("boolean")
                 || classNodes.containsKey(paraType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.name, "形参类型"+paraType+"不存在");
+            exceptionHandler.addException(ctx.name, "形参类型" + paraType + "不存在");
         }
-    }
-
-    @Override
-    public void enterAssignStmt(MiniJavaParser.AssignStmtContext ctx){
-        //考察赋值语句的语法错误
-        //<Symbol定义>：检查赋值语句中的symbol是否定义过
-
     }
 }
