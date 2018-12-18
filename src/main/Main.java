@@ -95,13 +95,13 @@ public class Main {
         System.out.println(tree.toStringTree(parser));
 
         //show AST in GUI
+        TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
+        JFrame frame = new JFrame("MiniJava AST");
+        viewer.setScale(1.2);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(0, 0, 500, 500);
-        JFrame frame = new JFrame("MiniJava AST");
-        TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
-        viewer.setScale(1.2);
         scrollPane.getViewport().add(viewer);
         frame.add(scrollPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
