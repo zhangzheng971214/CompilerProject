@@ -6,12 +6,12 @@ import main.gen.MiniJavaParser;
 import java.util.Map;
 
 //在已有符号表的基础上，对所有的符号是否定义进行检查
-public class symbolChecker extends MiniJavaBaseListener {
-    private Map<String, classNode> classNodes; //保存AST中所有的结点对象
+public class SymbolChecker extends MiniJavaBaseListener {
+    private Map<String, ClassNode> classNodes; //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
     private ExceptionHandler exceptionHandler;
 
-    public symbolChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
+    public SymbolChecker(Map<String, ClassNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
         this.exceptionHandler = exceptionHandler;
@@ -56,7 +56,7 @@ public class symbolChecker extends MiniJavaBaseListener {
                 }
                 if (classNodes.get(superClass).hasParent()) { //TODO:怎么判断no parent
                     //System.out.println(parent + " has parent.");
-                    classNode p = classNodes.get(superClass);
+                    ClassNode p = classNodes.get(superClass);
                     //System.out.println(p.getText());
                     superClass = p.getSuperClass();
                 } else
@@ -91,7 +91,7 @@ public class symbolChecker extends MiniJavaBaseListener {
         String methodName = ctx.name.getText();
         String returnType = ctx.rtype.getText();
         //TODO:CHECK!!!
-        current = (methodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
+        current = (MethodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
         //<类型定义检查>：检查method返回类型是否已定义
         if (returnType.equals("int")
                 || returnType.equals("int[]")

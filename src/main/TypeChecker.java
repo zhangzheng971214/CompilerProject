@@ -5,11 +5,11 @@ import main.gen.*;
 import java.util.*;
 
 public class TypeChecker extends MiniJavaBaseListener {
-    private Map<String, classNode> classNodes; //保存AST中所有的结点对象
+    private Map<String, ClassNode> classNodes; //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
     private ExceptionHandler exceptionHandler;
 
-    public TypeChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
+    public TypeChecker(Map<String, ClassNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
         this.exceptionHandler = exceptionHandler;
@@ -36,7 +36,7 @@ public class TypeChecker extends MiniJavaBaseListener {
         //进入作用域
         String methodName = ctx.name.getText();
         //TODO:CHECK!!!
-        current = (methodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
+        current = (MethodNode) current.findLocalSym(methodName); //current作用域中找到method结点，返回出来
     }
 
     @Override

@@ -10,6 +10,8 @@ public class Symbol {
     private String type;
 
     //构造函数
+    public Symbol(){}
+
     public Symbol(String name) {
         this.name = name;
     }

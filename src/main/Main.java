@@ -6,21 +6,20 @@ import org.antlr.v4.gui.*;
 import org.antlr.v4.runtime.tree.*;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static Map<String, classNode> classes = new HashMap<String, classNode>();
-    public static Scope SuperScope = new classNode("<Super Scope>", "<No Parent Class>", null, true);
+    public static Map<String, ClassNode> classes = new HashMap<String, ClassNode>();
+    public static Scope SuperScope = new ClassNode("<Super Scope>", "<No Parent Class>", null, true);
 
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
-        String stat = readFromFile("src\\test\\binarysearch.java");//For Windows
+        String stat = readFromFile("src\\test\\binarytree.java");//For Windows
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -43,7 +42,7 @@ public class Main {
 
         //测试语义分析中的scopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
-        scopeChecker ScopeChecker = new scopeChecker(classes, SuperScope, exceptionHandler);
+        ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         /*for (String key : classes.keySet()) {
             System.out.println("Node: " + key + ", ");
@@ -60,7 +59,7 @@ public class Main {
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
         //测试语义分析中的symbolChecker
-        symbolChecker SymbolChecker = new symbolChecker(classes, SuperScope, exceptionHandler);
+        SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
         walker.walk(SymbolChecker, tree);
         //TODO:Test Code!!!
 

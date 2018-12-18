@@ -1,17 +1,16 @@
 package main;
 
 import main.gen.*;
-import org.antlr.v4.runtime.Token;
 
 import java.util.*;
 
 //Constructor of Scope Tree, including Scopes and Symbol Tables
-public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule的作用域树，并保存好每个结点的符号表，同时初步检查作用域的语义错误
-    private Map<String, classNode> classNodes; //保存AST中所有的结点对象
+public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule的作用域树，并保存好每个结点的符号表，同时初步检查作用域的语义错误
+    private Map<String, ClassNode> classNodes; //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
     private ExceptionHandler exceptionHandler;
 
-    public scopeChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
+    public ScopeChecker(Map<String, ClassNode> classNodes, Scope scope, ExceptionHandler exceptionHandler) { //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
         this.exceptionHandler = exceptionHandler;
@@ -27,7 +26,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
     public void enterMainClass(MiniJavaParser.MainClassContext ctx) {
         //将此结点添加至classNodes中,并加入符号表
         String nodeName = ctx.name.getText();
-        classNode mainClass = new classNode(nodeName, "<No Parent>", current); //建立Node类，mianClass是没有parent
+        ClassNode mainClass = new ClassNode(nodeName, "<No Parent>", current); //建立Node类，mianClass是没有parent
         //但是有upperScope
         classNodes.put(nodeName, mainClass); //结点加入到Nodes
 
@@ -47,7 +46,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         String nodeName = ctx.name.getText();
         String superClassName = ctx.parent != null ? ctx.parent.getText() : "<No Parent>";
         boolean valid = true; //TODO:current.isValid();
-        classNode classDeclaration;
+        ClassNode classDeclaration;
         //类声明的过程中需要考察类是否重复定义
         if (classNodes.containsKey(nodeName)) {
             //System.out.println("类名重复定义");//TODO:错误输出
@@ -56,7 +55,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         }
         //构造class结点
         //System.out.println("class node: " + nodeName + "; its parent is " + ctx.parent.getText());
-        classDeclaration = new classNode(nodeName, superClassName, current, valid); //upperScope默认为parent
+        classDeclaration = new ClassNode(nodeName, superClassName, current, valid); //upperScope默认为parent
         //结点添加到classNode中，以及作为符号加入current的作用域
         if (valid) { //TODO:需不需要考察valid？
             current.addSymbol(classDeclaration);
@@ -101,7 +100,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             exceptionHandler.addException(ctx.name, "方法名重复定义");
             valid = false;
         }
-        methodNode method = new methodNode(nodeName, returnType, current, valid);
+        MethodNode method = new MethodNode(nodeName, returnType, current, valid);
         if (valid) {
             current.addSymbol(method);
         }
@@ -128,7 +127,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         }
         if (valid) {
             Symbol para = new Symbol(paraName, paraType);
-            ((methodNode) current.getNode()).addPara(para); //addPara()方法是methodNode特有的
+            ((MethodNode) current.getNode()).addPara(para); //addPara()方法是methodNode特有的
         }
     }
 }
