@@ -19,7 +19,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
-        String stat = readFromFile("src/test/binarysearch.java");
+        //String stat = readFromFile("src/test/binarysearch.java");//For Mac
+        String stat = readFromFile("src\\test\\binarysearch.java");//For Windows
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 

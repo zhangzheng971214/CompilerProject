@@ -168,6 +168,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         }
 
         //<类型定义检查>：检查形参中的类型是否已定义
+        //TODO:Check it!!!
         if (paraType.equals("int")
                 || paraType.equals("int[]")
                 || paraType.equals("boolean")
@@ -177,4 +178,10 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         }
     }
 
+    @Override
+    public void enterAssignStmt(MiniJavaParser.AssignStmtContext ctx){
+        //考察赋值语句的语法错误
+        //<Symbol定义>：检查赋值语句中的symbol是否定义过
+
+    }
 }
