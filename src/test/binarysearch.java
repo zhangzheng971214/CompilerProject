@@ -9,7 +9,7 @@ class BinarySearch{
 
 class BS{
     int[] number ;
-    int1 size ;
+    int size ;
 
     // Invoke methods to initialize, print and search
     // for elements on the array

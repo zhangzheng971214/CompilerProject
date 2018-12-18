@@ -20,7 +20,7 @@ public class Main {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
-        String stat = readFromFile("src\\test\\treevisitor.java");//For Windows
+        String stat = readFromFile("src\\test\\binarysearch.java");//For Windows
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -66,7 +66,8 @@ public class Main {
 
 
 
-
+        //TypeChecker typeChecker=new TypeChecker(classes, SuperScope,exceptionHandler);
+        //walker.walk(typeChecker, tree);
         exceptionHandler.checkException();
         // show AST in both console and GUI
         showAST(parser, tree);
