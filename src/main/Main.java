@@ -7,6 +7,8 @@ import org.antlr.v4.runtime.tree.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -17,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
-        String stat = readFromFile("src\\test\\binarysearch.java");
+        String stat = readFromFile("src/test/binarysearch.java");
 
         ANTLRInputStream in = new ANTLRInputStream(stat);
 
@@ -93,14 +95,17 @@ public class Main {
         System.out.println(tree.toStringTree(parser));
 
         //show AST in GUI
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(0, 0, 500, 500);
         JFrame frame = new JFrame("MiniJava AST");
-        JPanel panel = new JPanel();
         TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
-        viewer.setScale(1.5);
-        panel.add(viewer);
-        frame.add(panel);
+        viewer.setScale(1.2);
+        scrollPane.getViewport().add(viewer);
+        frame.add(scrollPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, 800);
         frame.setVisible(true);
     }
 }
