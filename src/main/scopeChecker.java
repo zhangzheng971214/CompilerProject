@@ -8,10 +8,12 @@ import java.util.*;
 public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的作用域树，并保存好每个结点的符号表，同时初步检查作用域的语义错误
     private Map<String, classNode> classNodes; //保存AST中所有的结点对象
     private Scope current; //记录当前处理的作用域，可为class也可为method
+    private ExceptionHandler exceptionHandler;
 
-    public scopeChecker(Map<String, classNode> classNodes, Scope scope){ //构造函数
+    public scopeChecker(Map<String, classNode> classNodes, Scope scope, ExceptionHandler exceptionHandler){ //构造函数
         this.classNodes = classNodes;
         this.current = scope; //指代goal
+        this.exceptionHandler=exceptionHandler;
     }
 
     public void exitScope(){
@@ -24,7 +26,8 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
     public void enterMainClass(MiniJavaParser.MainClassContext ctx){
         //将此结点添加至classNodes中,并加入符号表
         String nodeName = ctx.name.getText();
-        classNode mainClass = new classNode(nodeName, "<No Parent>", current); //建立Node类，goal是没有parent的
+        classNode mainClass = new classNode(nodeName, "<No Parent>", current); //建立Node类，mianClass是没有parent
+                                                                                            //但是有upperScope
         classNodes.put(nodeName, mainClass); //结点加入到Nodes
 
         current.addSymbol(mainClass); //此结点作为符号加入到current符号表中
@@ -39,14 +42,15 @@ public class scopeChecker extends MiniJavaBaseListener{ //建立每一个rule的
         //将此结点添加至classNodes中
         //TODO:考察parent结点是否是current结点
         String nodeName = ctx.name.getText();
-        boolean valid = current.isValid();
-        String parentName = ctx.parent!=null ? ctx.parent.getText() : "<No Parent>"; //获得parent的名
+        boolean valid = true; //TODO:current.isValid();
+        classNode parent = ctx.parent!=null ? classNodes.get(ctx.parent.getText()) : null; //获得parent的名
         //类声明的过程中需要考察类是否重复定义
         if(classNodes.containsKey(nodeName)) {
             System.out.println("类名重复定义");//TODO:错误输出
+            exceptionHandler.addException(ctx.name, "类名重复定义");
             valid = false;
         }
-        classNode classDeclaration = new classNode(nodeName, classNodes.get(parentName), valid); //upperScope默认为parent
+        classNode classDeclaration = new classNode(nodeName, parent, current, valid); //upperScope默认为parent
         if(valid) { //TODO:需不需要考察valid？
             current.addSymbol(classDeclaration);
             classNodes.put(nodeName, classDeclaration); //添加到全局的classNodes中

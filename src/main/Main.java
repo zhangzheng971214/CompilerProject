@@ -27,22 +27,22 @@ public class Main {
 
         MiniJavaParser parser = new MiniJavaParser(tokens);
 
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        ExceptionHandler exceptionHandler = new ExceptionHandler(stat);
 
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
         //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
 
-        // begin parsing
+        // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
         exceptionHandler.checkException();
 
-
+        // show AST in both console and GUI
         showAST(parser, tree);
 
         //测试语义分析中的ScopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
-        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope);
+        scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         for (String key : classes.keySet()) {
             System.out.println("Node: " + key + ", ");
@@ -50,8 +50,11 @@ public class Main {
         for (String key : virtualSuperScope.getSym().keySet()) {
             System.out.println("Symbol: " + key + ", ");
         }
-        for (String key : classes.get("BS").getSym().keySet()) {
+        for(String key:classes.get("Tree").getSym().keySet()){
             System.out.println("BS Symbol: " + key + ", ");
+            if(key.equals("Compare")){
+
+            }
         }
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
