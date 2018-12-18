@@ -67,31 +67,6 @@ public class symbolChecker extends MiniJavaBaseListener {
 
     @Override
     public void enterFormalParameters(MiniJavaParser.FormalParametersContext ctx) {
-        //识别到形参结点时，将形参作为符号添加到method中去
-        String paraName = ctx.name.getText();
-        String paraType = ctx.ptype.getText();
-        boolean valid = current.isValid();
-
-        //检查形参是否重复
-        if (current.getNode().findLocalSym(paraName) != null) {
-            System.out.println("形参重复定义");//TODO:错误输出
-            exceptionHandler.addException(ctx.name, "形参重复定义");
-            valid = false;
-        }
-        if (valid) {
-            Symbol para = new Symbol(paraName, paraType);
-            ((methodNode) current.getNode()).addPara(para); //addPara()方法是methodNode特有的
-        }
-
-        //<类型定义检查>：检查形参中的类型是否已定义
-        //TODO:Check it!!!
-        if (paraType.equals("int")
-                || paraType.equals("int[]")
-                || paraType.equals("boolean")
-                || classNodes.containsKey(paraType)) ;
-        else { //未找到type
-            exceptionHandler.addException(ctx.name, "形参类型" + paraType + "不存在");
-        }
     }
 
     @Override

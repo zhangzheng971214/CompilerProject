@@ -45,7 +45,7 @@ public class Main {
         ParseTreeWalker walker = new ParseTreeWalker();
         scopeChecker ScopeChecker = new scopeChecker(classes, virtualSuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
-        for (String key : classes.keySet()) {
+        /*for (String key : classes.keySet()) {
             System.out.println("Node: " + key + ", ");
         }
         for (String key : virtualSuperScope.getSym().keySet()) {
@@ -56,12 +56,12 @@ public class Main {
             if(key.equals("Compare")){
 
             }
-        }
+        }*/
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
         //测试语义分析中的symbolChecker
         symbolChecker SymbolChecker = new symbolChecker(classes, virtualSuperScope, exceptionHandler);
-        walker.walk(ScopeChecker, tree);
+        walker.walk(SymbolChecker, tree);
         //TODO:Test Code!!!
 
 
@@ -82,7 +82,6 @@ public class Main {
             BufferedReader bReader = new BufferedReader(reader);    //new一个BufferedReader对象，将文件内容读取到缓存
             while ((s = bReader.readLine()) != null) {  //逐行读取文件内容，不读取换行符和末尾的空格
                 sb.append(s + "\n");                    //将读取的字符串添加换行符后累加存放在缓存中
-                System.out.println(s);
             }
             bReader.close();
         }
