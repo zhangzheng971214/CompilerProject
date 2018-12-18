@@ -66,7 +66,7 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         }
         current = classDeclaration; //当前处理作用域设为mainClass的Scope
 
-        //此处在类声明时检查是否有循环继承
+        //<循环继承>：此处在类声明时检查是否有循环继承
         if (ctx.parent != null) {
             //TODO:Check Code!!!
             //不断往上找parent，如果找到自己，则报错；如果找到空parent,则跳出
@@ -104,6 +104,15 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             Symbol var = new Symbol(varName, varType); //新建Symbol对象
             current.addSymbol(var);
         }
+
+        //<类型定义检查>：检查变量声明的类型是否已定义
+        if (varType.equals("int")
+                || varType.equals("int[]")
+                || varType.equals("boolean")
+                || classNodes.containsKey(varType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "变量类型"+varType+"不存在");
+        }
     }
 
     @Override
@@ -124,6 +133,15 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
             current.addSymbol(method);
         }
         current = method;
+
+        //<类型定义检查>：检查method返回类型是否已定义
+        if (returnType.equals("int")
+                || returnType.equals("int[]")
+                || returnType.equals("boolean")
+                || classNodes.containsKey(returnType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "返回类型"+returnType+"不存在");
+        }
     }
 
     @Override
@@ -147,6 +165,15 @@ public class scopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         if (valid) {
             Symbol para = new Symbol(paraName, paraType);
             ((methodNode) current.getNode()).addPara(para); //addPara()方法是methodNode特有的
+        }
+
+        //<类型定义检查>：检查形参中的类型是否已定义
+        if (paraType.equals("int")
+                || paraType.equals("int[]")
+                || paraType.equals("boolean")
+                || classNodes.containsKey(paraType)) ;
+        else { //未找到type
+            exceptionHandler.addException(ctx.name, "形参类型"+paraType+"不存在");
         }
     }
 
