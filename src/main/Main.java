@@ -45,18 +45,7 @@ public class Main {
         ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         exceptionHandler.checkException();
-        /*for (String key : classes.keySet()) {
-            System.out.println("Node: " + key + ", ");
-        }
-        for (String key : virtualSuperScope.getSym().keySet()) {
-            System.out.println("Symbol: " + key + ", ");
-        }
-        for(String key:classes.get("BS").getSym().keySet()){
-            System.out.println("BS Symbol: " + key + ", ");
-            if(key.equals("Compare")){
-
-            }
-        }*/
+        
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
         //测试语义分析中的symbolChecker
