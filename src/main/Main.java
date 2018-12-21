@@ -19,7 +19,7 @@ public class Main {
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
 
-        //String stat = readFromFile("src\\test\\binarytree.java");//For Windows
+        //String stat = readFromFile("src\\test\\bubblesort.java");//For Windows
         //ANTLRInputStream in = new ANTLRInputStream(stat);
         ANTLRInputStream in = new ANTLRInputStream(System.in);
 
@@ -45,7 +45,7 @@ public class Main {
         ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
         walker.walk(ScopeChecker, tree);
         exceptionHandler.checkException();
-        
+
         System.out.println("Scope Check Success!"); //TODO:Check if it can work
 
         //测试语义分析中的symbolChecker

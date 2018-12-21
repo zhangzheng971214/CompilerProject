@@ -22,9 +22,16 @@ public class ExceptionHandler {
         return ++exceptionNum;
     }
 
+    public int addSemanticException(Token offendingToken, String msg) {
+        exceptionNum++;
+        System.err.println("line " + offendingToken.getLine() + ":" + offendingToken.getCharPositionInLine() + " " + msg);
+        underlineError(offendingToken);
+        return exceptionNum;
+    }
+
     public int addException(Token offendingToken, String msg) {
         exceptionNum++;
-        System.err.println("line " + offendingToken.getLine() + ":" + offendingToken.getCharPositionInLine() + " error: " + msg);
+        System.err.println("line " + offendingToken.getLine() + ":" + offendingToken.getCharPositionInLine() + " error: " + msg); //TODO：区分词法、语法错误
         underlineError(offendingToken);
         return exceptionNum;
     }

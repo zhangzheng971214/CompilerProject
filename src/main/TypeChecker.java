@@ -49,7 +49,7 @@ public class TypeChecker extends MiniJavaBaseListener {
     public void enterIfStmt(MiniJavaParser.IfStmtContext ctx) {
         String condition=ctx.condition.getText();
         if(!condition.equals("true")&&!condition.equals("false")){
-            exceptionHandler.addException(ctx.getStart(),"If condition type error!");
+            exceptionHandler.addSemanticException(ctx.getStart(),"If condition type error!");
         }
     }
 

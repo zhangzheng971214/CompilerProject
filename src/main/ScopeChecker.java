@@ -45,17 +45,17 @@ public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         //TODO:考察parent结点是否是current结点
         String nodeName = ctx.name.getText();
         String superClassName = ctx.parent != null ? ctx.parent.getText() : "<No Parent>";
-        boolean valid = true; //TODO:current.isValid();
+        boolean valid = current.isValid(); //TODO:current.isValid();
         ClassNode classDeclaration;
         //类声明的过程中需要考察类是否重复定义
         if (classNodes.containsKey(nodeName)) {
-            exceptionHandler.addException(ctx.name, "Semantic Error: Class <" + nodeName + "> has multiple definition.");
+            exceptionHandler.addSemanticException(ctx.name, "Semantic Error: Class <" + nodeName + "> has multiple definition.");
             valid = false;
         }
         //构造class结点
         classDeclaration = new ClassNode(nodeName, superClassName, current, valid); //upperScope默认为parent
         //结点添加到classNode中，以及作为符号加入current的作用域
-        if (valid) { //TODO:需不需要考察valid？
+        if (valid) { //没有重复定义才进行一下操作
             current.addSymbol(classDeclaration);
             classNodes.put(nodeName, classDeclaration); //添加到全局的classNodes中
         }
@@ -75,7 +75,7 @@ public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         boolean valid = current.isValid();
         //变量的声明过程中需要检查其是否已经在当前作用域下被重复声明
         if (current.findLocalSym(varName) != null) {
-            exceptionHandler.addException(ctx.name, "Semantic Error: Variable <" + varName + ">  has multiple definition.");
+            exceptionHandler.addSemanticException(ctx.name, "Semantic Error: Variable <" + varName + ">  has multiple definition.");
             valid = false;
         }
         if (valid) {
@@ -94,7 +94,7 @@ public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         //检查方法是否已被声明，即current符号表中是否有method同名符号
         if (current.findLocalSym(nodeName) != null) { //TODO:
             //System.out.println("方法名重复定义");//TODO:错误输出
-            exceptionHandler.addException(ctx.name, "Semantic Error: Method <" + nodeName + ">  has multiple definition.");
+            exceptionHandler.addSemanticException(ctx.name, "Semantic Error: Method <" + nodeName + ">  has multiple definition.");
             valid = false;
         }
         MethodNode method = new MethodNode(nodeName, returnType, current, valid);
@@ -118,7 +118,7 @@ public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule�
 
         //检查形参是否重复
         if (current.getNode().findLocalSym(paraName) != null) {
-            exceptionHandler.addException(ctx.name, "Semantic Error: Parameter <" + paraName + ">  has multiple definition.");
+            exceptionHandler.addSemanticException(ctx.name, "Semantic Error: Parameter <" + paraName + ">  has multiple definition.");
             valid = false;
         }
         if (valid) {

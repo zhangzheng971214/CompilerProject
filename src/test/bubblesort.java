@@ -24,7 +24,6 @@ class BBS{
 	aux01 = this.Print();
 	return 0 ;
     }
-
  
     // Sort array of integers using Bublesort method
     public int Sort(){

@@ -47,7 +47,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
             String superClass = ctx.parent.getText();
             for (int i = 0; i < classNodes.size(); i++) {
                 if (superClass.equals(nodeName)) {
-                    exceptionHandler.addException(ctx.name, "Semantic Error: <"+ nodeName + "> exists Cyclic Inheritance.");
+                    exceptionHandler.addSemanticException(ctx.name, "Semantic Error: <"+ nodeName + "> exists Cyclic Inheritance.");
                     exceptionHandler.checkException();
                     break;
                 }
@@ -75,7 +75,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || varType.equals("boolean")
                 || classNodes.containsKey(varType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.vtype.getStart(), "Semantic Error: Type <" + varType + "> does not exist.");
+            exceptionHandler.addSemanticException(ctx.vtype.getStart(), "Semantic Error: Type <" + varType + "> does not exist.");
         }
     }
 
@@ -92,7 +92,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || returnType.equals("boolean")
                 || classNodes.containsKey(returnType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.rtype.getStart(), "Semantic Error: Return Type <"+ returnType + "> does not exist.");
+            exceptionHandler.addSemanticException(ctx.rtype.getStart(), "Semantic Error: Return Type <"+ returnType + "> does not exist.");
         }
     }
 
@@ -113,7 +113,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
                 || paraType.equals("boolean")
                 || classNodes.containsKey(paraType)) ;
         else { //未找到type
-            exceptionHandler.addException(ctx.ptype.getStart(), "Semantic Error: Parameter Type <" + paraType + "> does not exist.");
+            exceptionHandler.addSemanticException(ctx.ptype.getStart(), "Semantic Error: Parameter Type <" + paraType + "> does not exist.");
         }
     }
 
@@ -123,7 +123,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
         //赋值语句，在当前作用域及父类作用域中找符号
         String assignName = ctx.assignName.getText();
         if (current.findWholeSym(assignName) == null) { //查找整个作用域，包括parent
-            exceptionHandler.addException(ctx.assignName, "Semantic Error: Symbol <" + assignName + "> is not defined.");
+            exceptionHandler.addSemanticException(ctx.assignName, "Semantic Error: Symbol <" + assignName + "> is not defined.");
         }
     }
 
@@ -133,7 +133,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
         //赋值语句，在当前作用域及父类作用域中找符号
         String aAssignName = ctx.aAssignName.getText();
         if (current.findWholeSym(aAssignName) == null) { //查找整个作用域，包括parent
-            exceptionHandler.addException(ctx.aAssignName, "Semantic Error: Symbol <" + aAssignName + "> is not defined.");
+            exceptionHandler.addSemanticException(ctx.aAssignName, "Semantic Error: Symbol <" + aAssignName + "> is not defined.");
         }
     }
 
@@ -143,7 +143,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
         //表达式中的符号，在当前作用域及父类作用域中找符号
         String idName = ctx.idName.getText();
         if (current.findWholeSym(idName) == null) { //查找整个作用域，包括parent
-            exceptionHandler.addException(ctx.idName, "Semantic Error: Symbol <" + idName + "> is not defined.");
+            exceptionHandler.addSemanticException(ctx.idName, "Semantic Error: Symbol <" + idName + "> is not defined.");
         }
     }
 
@@ -153,7 +153,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
         //new表达式的符号，符号应该为类名之一
         String newName = ctx.newName.getText();
         if (!classNodes.containsKey(newName)) { //classNodes中没有newName时报错
-            exceptionHandler.addException(ctx.newName, "Semantic Error: Symbol <" + newName + "> is not defined.");
+            exceptionHandler.addSemanticException(ctx.newName, "Semantic Error: Symbol <" + newName + "> is not defined.");
         }
     }
 
@@ -172,7 +172,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
             }
         }
         if (!isDefined) {
-            exceptionHandler.addException(ctx.callName, "Semantic Error: Symbol <" + callName + "> is not defined.");
+            exceptionHandler.addSemanticException(ctx.callName, "Semantic Error: Symbol <" + callName + "> is not defined.");
         }
     }
 
