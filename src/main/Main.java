@@ -37,7 +37,8 @@ public class Main {
 
         // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
-        exceptionHandler.checkException();
+        showAST(parser, tree); //test
+        //exceptionHandler.checkException(); TODO:怎么解决 输出树
 
 
         //测试语义分析中的scopeChecker
@@ -88,7 +89,7 @@ public class Main {
         //show AST in GUI
         TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
         JFrame frame = new JFrame("MiniJava AST");
-        viewer.setScale(1.2);
+        viewer.setScale(2);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

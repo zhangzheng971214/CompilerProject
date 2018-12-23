@@ -31,7 +31,7 @@ public class ExceptionHandler {
 
     public int addException(Token offendingToken, String msg) {
         exceptionNum++;
-        System.err.println("line " + offendingToken.getLine() + ":" + offendingToken.getCharPositionInLine() + " error: " + msg); //TODO：区分词法、语法错误
+        System.err.println("line " + offendingToken.getLine() + ":" + offendingToken.getCharPositionInLine() + " Syntax Error: " + msg); //TODO：区分词法、语法错误
         underlineError(offendingToken);
         return exceptionNum;
     }
@@ -40,7 +40,7 @@ public class ExceptionHandler {
         if (exceptionNum != 0) {
             System.err.println(exceptionNum + " exceptions found!");
             System.err.println("Program will exit!");
-            System.exit(-1);
+            //System.exit(-1);
         }
     }
 
