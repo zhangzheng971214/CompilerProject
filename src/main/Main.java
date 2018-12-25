@@ -34,7 +34,6 @@ public class Main {
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
         //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
-
         // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
         showAST(parser, tree); //test
@@ -47,20 +46,16 @@ public class Main {
         walker.walk(ScopeChecker, tree);
         exceptionHandler.checkException();
 
-        System.out.println("Scope Check Success!"); //TODO:Check if it can work
-
         //测试语义分析中的symbolChecker
         SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
         walker.walk(SymbolChecker, tree);
         exceptionHandler.checkException();
-        //TODO:Test Code!!!
-
 
         //TypeChecker typeChecker=new TypeChecker(classes, SuperScope,exceptionHandler);
         //walker.walk(typeChecker, tree);
         //exceptionHandler.checkException();
         // show AST in both console and GUI
-        showAST(parser, tree);
+        //showAST(parser, tree);TODO:Test Code!!!
         //这里是程序末尾 不要在这后面写代码
     }
 
