@@ -38,7 +38,7 @@ public class Main {
         // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
         showAST(parser, tree); //test
-        //exceptionHandler.checkException(); TODO:怎么解决 输出树
+        exceptionHandler.checkExceptionNoExit();
 
 
         //测试语义分析中的scopeChecker
