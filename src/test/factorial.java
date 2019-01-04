@@ -9,6 +9,7 @@ class Fac {
     public int ComputeFac(int num) {
         int num_aux;
         int a;
+        num_aux=0;
         System.out.println(5+3*5);
         return num_aux;
     }

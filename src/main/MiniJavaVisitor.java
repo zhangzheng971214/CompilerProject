@@ -30,6 +30,10 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
+        //对于函数，将其函数名和返回值加入到map中
+        String id = ctx.name.getText();
+        int value = visit(ctx.expression());
+        memory.put(id, value);
         return visitChildren(ctx);
     }
 
@@ -46,12 +50,19 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitIfStmt(MiniJavaParser.IfStmtContext ctx) {
-        return visitChildren(ctx);
+        int value = visit(ctx.expression());
+        if(value > 0){ //TODO:bool类型
+            return visit(ctx.statement(0));
+        }
+        return visit(ctx.statement(1));
     }
 
     @Override
     public Integer visitWhileStmt(MiniJavaParser.WhileStmtContext ctx) {
-        return visitChildren(ctx);
+        int value = visit(ctx.expression());
+        while(value > 0) //TODO:while的问题
+            return visit(ctx.statement());
+        return 0;
     }
 
     @Override
@@ -66,6 +77,10 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitAssignStmt(MiniJavaParser.AssignStmtContext ctx) {
+        String id = ctx.assignName.getText();
+        int value = visit(ctx.expression());
+        System.out.println(id+" "+value);
+        memory.put(id, value);
         return visitChildren(ctx);
     }
 
@@ -89,7 +104,7 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         String id = ctx.expression(0).getText();
         int length = visit(ctx.expression(1));
         memory.put(id, length); //将数组的长度存入map中
-        return length;
+        return visitChildren(ctx);
     }
 
     @Override
@@ -155,6 +170,7 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         //id类型，即变量名或者函数名，直接在map中查找其值
         //TODO:此处需要修改
         String id = ctx.getText();
+        System.out.println(id);
         int value = memory.get(id);
         return value;
     }
@@ -165,6 +181,7 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         int right = visit(ctx.expression(1));
         //return left < right;
         //TODO:bool类型怎么处理
+        return -1;
     }
 
     @Override
