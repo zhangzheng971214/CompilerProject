@@ -1,4 +1,4 @@
-// Generated from E:/IDEA projects/CompilerProject/src/main\MiniJava.g4 by ANTLR 4.7
+// Generated from D:/Github/CompilerProject/src/main\MiniJava.g4 by ANTLR 4.7
 package main.gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

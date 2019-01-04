@@ -19,9 +19,9 @@ public class Main {
 
         //String stat = readFromFile("src/test/binarysearch.java");//For Mac
 
-        //String stat = readFromFile("src\\test\\bubblesort.java");//For Windows
-        //ANTLRInputStream in = new ANTLRInputStream(stat);
-        ANTLRInputStream in = new ANTLRInputStream(System.in);
+        String stat = readFromFile("src\\test\\factorial.java");//For Windows
+        ANTLRInputStream in = new ANTLRInputStream(stat);
+        //ANTLRInputStream in = new ANTLRInputStream(System.in);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
 
@@ -36,7 +36,7 @@ public class Main {
         //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
         // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
-        showAST(parser, tree); //test
+        //showAST(parser, tree); //TODO:测试Visitor暂时关闭
         exceptionHandler.checkExceptionNoExit();
 
 
@@ -56,6 +56,10 @@ public class Main {
         //exceptionHandler.checkException();
         // show AST in both console and GUI
         //showAST(parser, tree);TODO:Test Code!!!
+
+        //TODO:visitor测试
+        MiniJavaVisitor visitor = new MiniJavaVisitor();
+        visitor.visit(tree);
         //这里是程序末尾 不要在这后面写代码
     }
 

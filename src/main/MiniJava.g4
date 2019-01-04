@@ -1,7 +1,9 @@
 // MiniJava complier implemented by Antlr
 grammar MiniJava;
 
-options { language = Java;}
+options { language = Java;
+           output = AST;
+           ASTLabelType = CommonTree;}
 
 goal
     :   mainClass classDeclaration* EOF
