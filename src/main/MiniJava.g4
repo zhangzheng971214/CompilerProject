@@ -1,9 +1,7 @@
 // MiniJava complier implemented by Antlr
 grammar MiniJava;
 
-options { language = Java;
-           output = AST;
-           ASTLabelType = CommonTree;}
+options { language = Java;}
 
 goal
     :   mainClass classDeclaration* EOF
@@ -15,13 +13,12 @@ mainClass
             'public' 'static' 'void' 'main' '(' 'String' '[' ']' ID ')'
             '{' statement '}'
         '}'
-        //{System.out.println("class "+$ID.text);}
-    ;   //finally{System.out.println("class ERROR!");}
+    ;
 
 classDeclaration
     :   'class' name=ID ('extends' parent=ID)?
         '{' varDeclaration* methodDeclaration* '}'
-        //{System.out.println("class "+$ID.text);}
+
     ;
 
 varDeclaration

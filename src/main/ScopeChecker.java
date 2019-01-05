@@ -92,8 +92,7 @@ public class ScopeChecker extends MiniJavaBaseListener { //建立每一个rule�
         boolean valid = current.isValid();
 
         //检查方法是否已被声明，即current符号表中是否有method同名符号
-        if (current.findLocalSym(nodeName) != null) { //TODO:
-            //System.out.println("方法名重复定义");//TODO:错误输出
+        if (current.findLocalSym(nodeName) != null) {
             exceptionHandler.addSemanticException(ctx.name, "Semantic Error: Method <" + nodeName + ">  has multiple definition.");
             valid = false;
         }

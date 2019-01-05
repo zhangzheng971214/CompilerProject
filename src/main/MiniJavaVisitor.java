@@ -81,14 +81,13 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         //Minijava代码中的println语句
         Integer value = visit(ctx.expression());
         System.out.println();
-        System.out.println();
         if (value == 0) {
-            System.out.println("System.out.println: " + "false");
+            System.out.println("false");
         } else if (value == 1){
-            System.out.println("System.out.println: " + "true");
+            System.out.println("true");
         }
         else
-            System.out.println("System.out.println: " + value);
+            System.out.println(value);
         return 0;
     }
 
@@ -96,7 +95,6 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
     public Integer visitAssignStmt(MiniJavaParser.AssignStmtContext ctx) {
         String id = ctx.assignName.getText();
         int value = visit(ctx.expression());
-        System.out.println(id + " = " + value);
         memory.put(id, value);
         return 0;
     }
@@ -206,8 +204,6 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
     public Integer visitCompareExpr(MiniJavaParser.CompareExprContext ctx) {
         int left = visit(ctx.expression(0));
         int right = visit(ctx.expression(1));
-        //return left < right;
-        //TODO:bool类型怎么处理
         return -1;
     }
 

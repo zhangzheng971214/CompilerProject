@@ -16,9 +16,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        String stat = readFromFile("src\\test\\aaaa.java");//For Windows
-        ANTLRInputStream in = new ANTLRInputStream(stat);
-        //ANTLRInputStream in = new ANTLRInputStream(System.in);
+        //String stat = readFromFile("src\\test\\factorial.java"); //For Windows
+        //ANTLRInputStream in = new ANTLRInputStream(stat);
+        ANTLRInputStream in = new ANTLRInputStream(System.in);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
 
@@ -30,10 +30,8 @@ public class Main {
 
         parser.removeErrorListeners(); // remove ConsoleErrorListener
         parser.addErrorListener(new SyntaxErrorListener(exceptionHandler)); // add ours
-        //parser.getInterpreter().setPredictionMode(PredictionMode.LL_EXACT_AMBIG_DETECTION); // make the parser report all ambiguities
         // begin parsing, try to build AST meanwhile check 词法 and 语法
         ParseTree tree = parser.goal();
-        //showAST(parser, tree); //TODO:测试Visitor暂时关闭
         exceptionHandler.checkExceptionNoExit();
         showAST(parser, tree);
 
@@ -52,16 +50,12 @@ public class Main {
             walker.walk(SymbolChecker, tree);
             exceptionHandler.checkException();
         }
-        //TypeChecker typeChecker=new TypeChecker(classes, SuperScope,exceptionHandler);
-        //walker.walk(typeChecker, tree);
-        //exceptionHandler.checkException();
-        // show AST in both console and GUI
 
-        //TODO:visitor测试
-        //MiniJavaVisitor visitor = new MiniJavaVisitor();
-        //visitor.visit(tree);
-
-        //这里是程序末尾 不要在这后面写代码
+        String str = args[0];
+        if(str.equalsIgnoreCase("-Visitor")) {
+            MiniJavaVisitor visitor = new MiniJavaVisitor();
+            visitor.visit(tree);
+        }
     }
 
     public static String readFromFile(String path) {
