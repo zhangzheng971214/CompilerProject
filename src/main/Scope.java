@@ -16,7 +16,4 @@ public interface Scope {
     public Symbol findLocalSym(String name);
 
     public Symbol findWholeSym(String name);
-
-    //For Test
-    public Map<String, Symbol> getSym();
 }
