@@ -15,13 +15,10 @@ public class Main {
     public static Scope SuperScope = new ClassNode("<Super Scope>", "<No Parent Class>", null, true);
 
     public static void main(String[] args) throws Exception {
-        //String stat = "class T{public static void main(String [] args){ System.out.println(1); } }";
 
-        //String stat = readFromFile("src/test/binarysearch.java");//For Mac
-
-        String stat = readFromFile("src\\test\\factorial.java");//For Windows
-        ANTLRInputStream in = new ANTLRInputStream(stat);
-        //ANTLRInputStream in = new ANTLRInputStream(System.in);
+        //String stat = readFromFile("src\\test\\factorial.java");//For Windows
+        //ANTLRInputStream in = new ANTLRInputStream(stat);
+        ANTLRInputStream in = new ANTLRInputStream(System.in);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
 
