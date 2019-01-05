@@ -47,8 +47,9 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         }
         */
         int value = visit(ctx.expression());
+        System.out.println("Test return: " + value);
         memory.put(id, value);
-        return 0; //访问函数只需要得到其返回值
+        return visitChildren(ctx); //访问函数只需要得到其返回值
     }
 
 
