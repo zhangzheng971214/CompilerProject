@@ -142,7 +142,19 @@ public class SymbolChecker extends MiniJavaBaseListener {
         //<symbol声明>：检查使用的symbol是否声明过
         //表达式中的符号，在当前作用域及父类作用域中找符号
         String idName = ctx.idName.getText();
-        if (current.findWholeSym(idName) == null) { //查找整个作用域，包括parent
+
+
+        boolean isDefined = false;
+        for (String key : classNodes.keySet()) {
+            //遍历每个类的符号表
+            //System.out.println("call Test: " + key);
+            if (classNodes.get(key).findWholeSym(idName) != null
+                    || key.equals(idName)) { //此处查找局部的符号就够了，因为每个类都要遍历到
+                isDefined = true;
+                break; //找到定义时退出
+            }
+        }
+        if (!isDefined && current.findWholeSym(idName) == null) {
             exceptionHandler.addSemanticException(ctx.idName, "Semantic Error: Symbol <" + idName + "> is not defined.");
         }
     }
@@ -166,6 +178,7 @@ public class SymbolChecker extends MiniJavaBaseListener {
         boolean isDefined = false;
         for (String key : classNodes.keySet()) {
             //遍历每个类的符号表
+            System.out.println("call Test: " + key);
             if (classNodes.get(key).findWholeSym(callName) != null) { //此处查找局部的符号就够了，因为每个类都要遍历到
                 isDefined = true;
                 break; //找到定义时退出

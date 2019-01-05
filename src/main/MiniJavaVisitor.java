@@ -2,6 +2,7 @@ package main;
 
 import main.gen.MiniJavaBaseVisitor;
 import main.gen.MiniJavaParser;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import javax.naming.Context;
 import java.util.*;
@@ -36,20 +37,14 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
     public Integer visitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
         //对于函数，将其函数名和返回值加入到map中
         String id = ctx.name.getText();
-        //int a = visitChildren(ctx);
         int a = -1;
-        //ListIterator<MiniJavaParser.StatementContext> i = ctx.statement().listIterator();
-        /*
-        for (int j = 0; j < ctx.statement().size(); j++){
-            System.out.println("j="+j);
-            //a = visit(ctx.statement(j));
-            System.out.println("a="+a);
+        for (int j = 0; j < ctx.statement().size(); j++) {
+            a = visit(ctx.statement().get(j));
         }
-        */
+
         int value = visit(ctx.expression());
-        System.out.println("Test return: " + value);
         memory.put(id, value);
-        return visitChildren(ctx); //访问函数只需要得到其返回值
+        return 0; //访问函数只需要得到其返回值
     }
 
 
@@ -65,21 +60,19 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitIfStmt(MiniJavaParser.IfStmtContext ctx) {
-        /*
         int value = visit(ctx.expression());
-        if(value > 0){ //TODO:bool类型
+        if (value == 1) { //TODO:bool类型
             return visit(ctx.statement(0));
         }
-
-        return visit(ctx.statement(1));*/
-        return visitChildren(ctx);
+        return visit(ctx.statement(1));
     }
 
     @Override
     public Integer visitWhileStmt(MiniJavaParser.WhileStmtContext ctx) {
         int value = visit(ctx.expression());
-        while(value > 0) //TODO:while的问题
+        while (value > 0) { //TODO:while的问题
             return visit(ctx.statement());
+        }
         return 0;
     }
 
@@ -89,22 +82,28 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         Integer value = visit(ctx.expression());
         System.out.println();
         System.out.println();
-        System.out.println(value); //TODO:测试输出
-        return visitChildren(ctx);
+        if (value == 0) {
+            System.out.println("System.out.println: " + "false");
+        } else if (value == 1){
+            System.out.println("System.out.println: " + "true");
+        }
+        else
+            System.out.println("System.out.println: " + value);
+        return 0;
     }
 
     @Override
     public Integer visitAssignStmt(MiniJavaParser.AssignStmtContext ctx) {
         String id = ctx.assignName.getText();
         int value = visit(ctx.expression());
-        System.out.println(id+" = "+value);
+        System.out.println(id + " = " + value);
         memory.put(id, value);
-        return visitChildren(ctx);
+        return 0;
     }
 
     @Override
     public Integer visitArrayAssignStmt(MiniJavaParser.ArrayAssignStmtContext ctx) {
-        return visitChildren(ctx);
+        return 0;
     }
 
     @Override
@@ -144,14 +143,18 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitLengthExpr(MiniJavaParser.LengthExprContext ctx) {
-        String id =  ctx.expression().getText();
+        String id = ctx.expression().getText();
         int value = memory.get(id); //取得数组的长度值
         return value;
     }
 
     @Override
     public Integer visitNotExpr(MiniJavaParser.NotExprContext ctx) {
-        return visitChildren(ctx);
+        int value = visit(ctx.expression());
+        if (value > 0)
+            return 0;
+        else
+            return -1;
     }
 
     @Override
@@ -170,12 +173,19 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitBoolExpr(MiniJavaParser.BoolExprContext ctx) {
-        return visitChildren(ctx);
+        String id = ctx.getText();
+        if (id.equals("true"))
+            return 1;
+        else
+            return 0;
     }
 
     @Override
     public Integer visitCallExpr(MiniJavaParser.CallExprContext ctx) {
-        return visitChildren(ctx);
+        //函数调用
+        String id = ctx.callName.getText();
+        int value = memory.get(id);
+        return value;
     }
 
     @Override
@@ -188,7 +198,6 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         //id类型，即变量名或者函数名，直接在map中查找其值
         //TODO:此处需要修改
         String id = ctx.getText();
-        //System.out.println(id);
         int value = memory.get(id);
         return value;
     }
@@ -207,10 +216,5 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         int left = visit(ctx.expression(0));
         int right = visit(ctx.expression(1));
         return left & right;
-    }
-
-    @Override
-    public Integer visitType(MiniJavaParser.TypeContext ctx) {
-        return visitChildren(ctx);
     }
 }

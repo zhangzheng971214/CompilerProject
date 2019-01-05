@@ -55,16 +55,12 @@ public class Main {
         //walker.walk(typeChecker, tree);
         //exceptionHandler.checkException();
         // show AST in both console and GUI
-        showAST(parser, tree); //TODO:Test Code!!!
+        //showAST(parser, tree); //TODO:Test Code!!!
 
-        /*
-        TestVisitor visitor = new TestVisitor(classes, SuperScope, exceptionHandler);
-        walker.walk(visitor, tree);
-        */
         //TODO:visitor测试
         MiniJavaVisitor visitor = new MiniJavaVisitor();
         visitor.visit(tree);
-        
+
         //这里是程序末尾 不要在这后面写代码
     }
 
