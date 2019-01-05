@@ -3,10 +3,11 @@ package main;
 import main.gen.MiniJavaBaseVisitor;
 import main.gen.MiniJavaParser;
 
+import javax.naming.Context;
 import java.util.*;
 
 public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
-    Map<String, Integer> memory = new HashMap<String, Integer>();
+    private Map<String, Integer> memory = new HashMap<String, Integer>();
 
     @Override
     public Integer visitGoal(MiniJavaParser.GoalContext ctx) {
@@ -25,6 +26,9 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitVarDeclaration(MiniJavaParser.VarDeclarationContext ctx) {
+        String id = ctx.name.getText();
+        int value = 0;
+        memory.put(id, value);
         return visitChildren(ctx);
     }
 
@@ -32,9 +36,19 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
     public Integer visitMethodDeclaration(MiniJavaParser.MethodDeclarationContext ctx) {
         //对于函数，将其函数名和返回值加入到map中
         String id = ctx.name.getText();
+        //int a = visitChildren(ctx);
+        int a = -1;
+        //ListIterator<MiniJavaParser.StatementContext> i = ctx.statement().listIterator();
+        /*
+        for (int j = 0; j < ctx.statement().size(); j++){
+            System.out.println("j="+j);
+            //a = visit(ctx.statement(j));
+            System.out.println("a="+a);
+        }
+        */
         int value = visit(ctx.expression());
         memory.put(id, value);
-        return visitChildren(ctx);
+        return 0; //访问函数只需要得到其返回值
     }
 
 
@@ -50,11 +64,14 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
 
     @Override
     public Integer visitIfStmt(MiniJavaParser.IfStmtContext ctx) {
+        /*
         int value = visit(ctx.expression());
         if(value > 0){ //TODO:bool类型
             return visit(ctx.statement(0));
         }
-        return visit(ctx.statement(1));
+
+        return visit(ctx.statement(1));*/
+        return visitChildren(ctx);
     }
 
     @Override
@@ -72,14 +89,14 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         System.out.println();
         System.out.println();
         System.out.println(value); //TODO:测试输出
-        return value;
+        return visitChildren(ctx);
     }
 
     @Override
     public Integer visitAssignStmt(MiniJavaParser.AssignStmtContext ctx) {
         String id = ctx.assignName.getText();
         int value = visit(ctx.expression());
-        System.out.println(id+" "+value);
+        System.out.println(id+" = "+value);
         memory.put(id, value);
         return visitChildren(ctx);
     }
@@ -170,7 +187,7 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
         //id类型，即变量名或者函数名，直接在map中查找其值
         //TODO:此处需要修改
         String id = ctx.getText();
-        System.out.println(id);
+        //System.out.println(id);
         int value = memory.get(id);
         return value;
     }
