@@ -13,6 +13,10 @@ public class ExceptionHandler {
         inputLines = input.split("\n");
     }
 
+    public boolean hasException() {
+        return exceptionNum > 0;
+    }
+
     public void printException(String txt) {
         exceptionNum++;
         System.err.println(txt);

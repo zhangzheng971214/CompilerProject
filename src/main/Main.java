@@ -16,9 +16,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        //String stat = readFromFile("src\\test\\factorial.java");//For Windows
-        //ANTLRInputStream in = new ANTLRInputStream(stat);
-        ANTLRInputStream in = new ANTLRInputStream(System.in);
+        String stat = readFromFile("src\\test\\aaaa.java");//For Windows
+        ANTLRInputStream in = new ANTLRInputStream(stat);
+        //ANTLRInputStream in = new ANTLRInputStream(System.in);
 
         MiniJavaLexer lexer = new MiniJavaLexer(in);
 
@@ -35,28 +35,31 @@ public class Main {
         ParseTree tree = parser.goal();
         //showAST(parser, tree); //TODO:测试Visitor暂时关闭
         exceptionHandler.checkExceptionNoExit();
+        showAST(parser, tree);
 
 
         //测试语义分析中的scopeChecker
         ParseTreeWalker walker = new ParseTreeWalker();
-        ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
-        walker.walk(ScopeChecker, tree);
-        exceptionHandler.checkException();
+        if(!exceptionHandler.hasException()) {
+            ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
+            walker.walk(ScopeChecker, tree);
+            exceptionHandler.checkException();
+        }
 
         //测试语义分析中的symbolChecker
-        SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
-        walker.walk(SymbolChecker, tree);
-        exceptionHandler.checkException();
-
+        if(!exceptionHandler.hasException()) {
+            SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
+            walker.walk(SymbolChecker, tree);
+            exceptionHandler.checkException();
+        }
         //TypeChecker typeChecker=new TypeChecker(classes, SuperScope,exceptionHandler);
         //walker.walk(typeChecker, tree);
         //exceptionHandler.checkException();
         // show AST in both console and GUI
-        //showAST(parser, tree); //TODO:Test Code!!!
 
         //TODO:visitor测试
-        MiniJavaVisitor visitor = new MiniJavaVisitor();
-        visitor.visit(tree);
+        //MiniJavaVisitor visitor = new MiniJavaVisitor();
+        //visitor.visit(tree);
 
         //这里是程序末尾 不要在这后面写代码
     }
@@ -86,7 +89,7 @@ public class Main {
         //show AST in GUI
         TreeViewer viewer = new TreeViewer(Arrays.asList(parser.getRuleNames()), tree);
         JFrame frame = new JFrame("MiniJava AST");
-        viewer.setScale(2);
+        viewer.setScale(1.5);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
