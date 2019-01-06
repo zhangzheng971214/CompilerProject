@@ -1,7 +1,5 @@
 package main;
 
-import java.util.*;
-
 public interface Scope {
     public String getText();
 

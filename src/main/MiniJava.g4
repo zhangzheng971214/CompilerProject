@@ -33,7 +33,7 @@ methodDeclaration
             'return' expression ';'
         '}'
     ;
-//修改formalParameters以便于ScopeChecker匹配
+
 formalParameters
     :   ptype=type name=ID
     |   ptype=type name=ID ',' formalParameters
@@ -79,7 +79,7 @@ ID
     ;
 
 INT
-    :   [0-9]+      //允许0开头,负数怎么办？
+    :   [0-9]+
     ;
 
 WS
