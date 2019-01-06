@@ -23,11 +23,9 @@
 
 + 简易的后端
 
-### 三、使用方法
+### 三、使用
 
-> **待完成**
-
-在out文件夹中打开cmd命令行，输入如下命令即可运行：
+在是```src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
 
 ​	``` java -jar CompilerProject.jar -noVisitor < Right_factorial.java```
 
@@ -40,11 +38,16 @@
 + 张政_15307130133
     + 语义分析，包括两次遍历的类（ScopeChecker和SymbolChecker）以及相关的数据结构（ClassNode和MethodNode）
     + 简易的后端解释器，MiniJavaVisitor类
-    + 部分实验报告
+    + 实验报告
     + README.md
-    + PPT制作
-    + 错误样例代码
-    + 程序打包
+    + Pre的PPT制作
+    + 错误样例代码的构造
+    + 打包项目文件
 
 + 肖仁杰_15307130260
-    + 
+    + BNF到ANTLR语法描述格式的翻译，编写了MiniJava.g4文件
+    + 错误处理部分，完成了ExceptionHandler类，实现了错误的统一收集、分类、管理、处理
+    + 完成了Scope接口和Node虚基类的逻辑和代码
+    + 使用测试文件对程序的功能和稳定性进行测试
+    + 准备并演示Pre
+    + 撰写了实验报告的主体和部分README内容
