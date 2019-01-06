@@ -25,15 +25,21 @@
 
 ### 三、使用
 
+#### 1 运行脚本
+
 在```/src/out```目录下存放了编译好的CompilerProject.jar包和若干个测试脚本。在Windows环境下可直接双击脚本运行测试。
 其中Run_noInterpreter.bat是不带解释器的测试脚本，展示了本编译器的常规运行方式；run_Interpreter.bat中开启了解释器。
 文件名以Error开头的脚本用于演示错误处理，其输入文件中有人为设置的错误。
 
+#### 2 命令行运行
+
 在```/src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
-    ``` java -jar CompilerProject.jar -noVisitor < filename```
+
+​    ``` java -jar CompilerProject.jar -noVisitor < filename```
 
 例如
-​	``` java -jar CompilerProject.jar -noVisitor < ../test/Right_factorial.java```
+
+​    ``` java -jar CompilerProject.jar -noVisitor < ../test/Right_factorial.java```
 
 其中，```filename```为目标文件名。参数```-noVisitor```指定不使用后端解释器（由于功能不够完善，不建议在测试其他文件时开启解释器）
 
@@ -55,3 +61,7 @@
     + 使用测试文件对程序的功能和稳定性进行测试
     + 准备并演示Pre
     + 撰写了实验报告的主体和部分README内容
+
+### 五、github链接
+
+github项目链接：[https://github.com/zhangzheng971214/CompilerProject](https://github.com/zhangzheng971214/CompilerProject)
