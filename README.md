@@ -2,7 +2,7 @@
 
 ### 一、简介
 
-> 2018~2019学年*《编译原理》*课程Project
+> 2018~2019学年《编译原理》课程Project
 
 > *肖仁杰(15307130260)*、*张政(15307130133)*
 
@@ -25,15 +25,17 @@
 
 ### 三、使用
 
-在```src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
+在```/src/out```目录下存放了编译好的CompilerProject.jar包和若干个测试脚本。在Windows环境下可直接双击脚本运行测试。
+其中Run_noInterpreter.bat是不带解释器的测试脚本，展示了本编译器的常规运行方式；run_Interpreter.bat中开启了解释器。
+文件名以Error开头的脚本用于演示错误处理，其输入文件中有人为设置的错误。
 
-​	``` java -jar CompilerProject.jar -noVisitor < Right_factorial.java```
+在```/src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
+    ``` java -jar CompilerProject.jar -noVisitor < filename```
 
-或	```java -jar CompilerProject.jar -Visitor < factorial.java```
+例如
+​	``` java -jar CompilerProject.jar -noVisitor < ../test/Right_factorial.java```
 
-其中，使用了输入重定向运算符 ``` < ```，测试其他样例代码时只需要修改后面的文件名即可，out文件夹下已经提供了几个测试样例。第二行的命令通过参数```-Visitor```指定使用后端解释器输出（由于功能不够完善，此处的测试例子为factorial.java，不可更改）
-
-此外，我们编写了windows系统下的运行脚本bat文件，存放在```src/out```文件夹下，提供了两个错误的运行示例，以及两个（有或无后端解释器）正确的示例。
+其中，```filename```为目标文件名。参数```-noVisitor```指定不使用后端解释器（由于功能不够完善，不建议在测试其他文件时开启解释器）
 
 ### 四、分工
 
