@@ -39,7 +39,7 @@
 
 例如
 
-​    ``` java -jar CompilerProject.jar -noVisitor < ../test/Right_factorial.java```
+​    ``` java -jar CompilerProject.jar -noVisitor < ../test/Right.java```
 
 其中，```filename```为目标文件名。参数```-noVisitor```指定不使用后端解释器（由于功能不够完善，不建议在测试其他文件时开启解释器）
 
