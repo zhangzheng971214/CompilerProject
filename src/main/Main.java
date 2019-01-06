@@ -41,14 +41,14 @@ public class Main {
         if(!exceptionHandler.hasException()) {
             ScopeChecker ScopeChecker = new ScopeChecker(classes, SuperScope, exceptionHandler);
             walker.walk(ScopeChecker, tree);
-            exceptionHandler.checkException();
+            exceptionHandler.checkExceptionNoExit();
         }
 
         //测试语义分析中的symbolChecker
         if(!exceptionHandler.hasException()) {
             SymbolChecker SymbolChecker = new SymbolChecker(classes, SuperScope, exceptionHandler);
             walker.walk(SymbolChecker, tree);
-            exceptionHandler.checkException();
+            exceptionHandler.checkExceptionNoExit();
         }
 
         if(!exceptionHandler.hasException()) {

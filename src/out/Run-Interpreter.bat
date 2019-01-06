@@ -1,0 +1,1 @@
+java -jar CompilerProject.jar -Visitor < ..\test\factorial.java

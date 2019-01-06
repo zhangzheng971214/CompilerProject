@@ -1,0 +1,1 @@
+java -jar CompilerProject.jar -noVisitor < ..\test\Right.java
