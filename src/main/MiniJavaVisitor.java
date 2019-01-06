@@ -80,7 +80,6 @@ public class MiniJavaVisitor extends MiniJavaBaseVisitor<Integer> {
     public Integer visitPrintStmt(MiniJavaParser.PrintStmtContext ctx) {
         //Minijava代码中的println语句
         Integer value = visit(ctx.expression());
-        System.out.println();
         if (value == 0) {
             System.out.println("false");
         } else if (value == 1){
