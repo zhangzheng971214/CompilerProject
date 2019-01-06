@@ -25,13 +25,15 @@
 
 ### 三、使用
 
-在是```src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
+在```src/out```文件夹中打开cmd命令行，输入如下命令即可运行：
 
 ​	``` java -jar CompilerProject.jar -noVisitor < Right_factorial.java```
 
 或	```java -jar CompilerProject.jar -Visitor < factorial.java```
 
 其中，使用了输入重定向运算符 ``` < ```，测试其他样例代码时只需要修改后面的文件名即可，out文件夹下已经提供了几个测试样例。第二行的命令通过参数```-Visitor```指定使用后端解释器输出（由于功能不够完善，此处的测试例子为factorial.java，不可更改）
+
+此外，我们编写了windows系统下的运行脚本bat文件，存放在```src/out```文件夹下，提供了两个错误的运行示例，以及两个（有或无后端解释器）正确的示例。
 
 ### 四、分工
 

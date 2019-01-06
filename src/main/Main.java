@@ -50,12 +50,14 @@ public class Main {
             exceptionHandler.checkException();
         }
 
-        String str = args[0];
-        if(str.equalsIgnoreCase("-Visitor")) {
-            System.out.println();
-            System.out.println();
-            MiniJavaVisitor visitor = new MiniJavaVisitor();
-            visitor.visit(tree);
+        if(!exceptionHandler.hasException()) {
+            String str = args[0];
+            if (str.equalsIgnoreCase("-Visitor")) {
+                System.out.println();
+                System.out.println();
+                MiniJavaVisitor visitor = new MiniJavaVisitor();
+                visitor.visit(tree);
+            }
         }
     }
 
